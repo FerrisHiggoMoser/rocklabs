@@ -32,7 +32,7 @@
   }
   @keyframes spin {
     from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    to   { transform: rotate(-360deg); }
   }
   nav {
     margin-top: 1.5rem;
@@ -46,12 +46,6 @@
     font-size: 1.05rem;
   }
   nav a:hover { text-decoration: underline; }
-  footer {
-    position: fixed;
-    bottom: 1rem;
-    font-size: 0.8rem;
-    color: #999;
-  }
 </style>
 </head>
 <body>
@@ -60,6 +54,5 @@
   <nav>
     <a href="viewer.html?model=models/trackpad_double_print.stl">(better)_trackpad</a>
   </nav>
-  <footer>rocklabs.rocks</footer>
 </body>
 </html>
