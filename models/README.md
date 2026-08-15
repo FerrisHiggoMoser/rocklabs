@@ -6,7 +6,7 @@ Single-layer follow-up to the stacked puck, using the measured 11.5 × 13.75 × 
 - KB2040 and adapter sit side by side on the bottom plate; no stacked shelf
 - Borderless top: the sensor drops in **from above** through a Ø40.5 opening and rests flush on a continuous 360° ring ledge; a thin ring of double-sided tape on the ledge keeps it seated
 - Closure: three M2 screws with M2×4 heat-set inserts
-- USB-C opening 13 × 7 mm in the side wall; the connector sits ~5.4 mm recessed, so the opening is sized for the cable overmold
+- USB-C port: stadium-shaped 11.6 × 6.6 mm slot with rounded ends, centered on the plug axis, with a 13 × 8 lead-in chamfer on the outer face for the cable overmold
 - Maximum assembled adapter height (PCB + FFC connector + header): **6.0 mm** — clip the header pins or solder wires directly; test-fit before a final print
 - `print_plate` is both parts print-ready on one bed: top shell face-down, bottom plate beside it
 
