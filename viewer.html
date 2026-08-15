@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rocklabs.rocks — 3D viewer</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #ffffff; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  #canvas-wrap { position: absolute; inset: 0; }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    z-index: 10;
+    pointer-events: none;
+  }
+  header a, header span { pointer-events: auto; }
+  header a {
+    color: #0055cc;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  header a:hover { text-decoration: underline; }
+  #status {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  #hint {
+    position: fixed;
+    bottom: 1rem;
+    left: 0; right: 0;
+    text-align: center;
+    color: #999;
+    font-size: 0.85rem;
+    z-index: 10;
+    pointer-events: none;
+  }
+  #drop-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 85, 204, 0.08);
+    border: 3px dashed #0055cc;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #0055cc;
+    font-size: 1.3rem;
+    z-index: 20;
+    pointer-events: none;
+  }
+  body.dragging #drop-overlay { display: flex; }
+</style>
+</head>
+<body>
+  <div id="canvas-wrap"></div>
+  <header>
+    <a href="index.html">&larr; rocklabs.rocks</a>
+    <span id="status"></span>
+  </header>
+  <div id="hint">drag to rotate &middot; scroll to zoom &middot; right-drag to pan &middot; drop an .stl file anywhere to view it</div>
+  <div id="drop-overlay">drop your STL file</div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+    const wrap = document.getElementById('canvas-wrap');
+    const status = document.getElementById('status');
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
+
+    const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 5000);
+    camera.position.set(0, 0, 100);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(devicePixelRatio);
+    renderer.setSize(innerWidth, innerHeight);
+    wrap.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x777777, 1.2));
+    const dir = new THREE.DirectionalLight(0xffffff, 1.5);
+    dir.position.set(1, 1, 1);
+    scene.add(dir);
+
+    const material = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, roughness: 0.65, metalness: 0.1 });
+    let mesh = null;
+    const loader = new STLLoader();
+
+    function showGeometry(geometry, name) {
+      if (mesh) {
+        scene.remove(mesh);
+        mesh.geometry.dispose();
+      }
+      geometry.computeVertexNormals();
+      geometry.center();
+      mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      // fit camera to the model
+      geometry.computeBoundingSphere();
+      const r = geometry.boundingSphere.radius;
+      const dist = r / Math.sin((camera.fov * Math.PI / 180) / 2) * 1.2;
+      camera.position.set(dist * 0.6, dist * 0.4, dist);
+      camera.near = dist / 100;
+      camera.far = dist * 100;
+      camera.updateProjectionMatrix();
+      controls.target.set(0, 0, 0);
+      controls.update();
+
+      status.textContent = name;
+      document.title = name + ' — rocklabs.rocks';
+    }
+
+    function loadURL(url) {
+      status.textContent = 'loading…';
+      loader.load(
+        url,
+        geo => showGeometry(geo, url.split('/').pop()),
+        undefined,
+        () => { status.textContent = 'could not load ' + url; }
+      );
+    }
+
+    const params = new URLSearchParams(location.search);
+    if (params.get('model')) loadURL(params.get('model'));
+    else status.textContent = 'no model loaded — drop an .stl file here';
+
+    // drag & drop local STL files
+    let dragDepth = 0;
+    addEventListener('dragenter', e => { e.preventDefault(); dragDepth++; document.body.classList.add('dragging'); });
+    addEventListener('dragleave', e => { e.preventDefault(); if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove('dragging'); } });
+    addEventListener('dragover', e => e.preventDefault());
+    addEventListener('drop', e => {
+      e.preventDefault();
+      dragDepth = 0;
+      document.body.classList.remove('dragging');
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => showGeometry(loader.parse(reader.result), file.name);
+      reader.readAsArrayBuffer(file);
+    });
+
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+
+    renderer.setAnimationLoop(() => {
+      controls.update();
+      renderer.render(scene, camera);
+    });
+  </script>
+</body>
+</html>
