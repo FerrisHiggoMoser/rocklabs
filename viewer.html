@@ -89,23 +89,32 @@
     dir.position.set(1, 1, 1);
     scene.add(dir);
 
-    const material = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, roughness: 0.65, metalness: 0.1 });
-    let mesh = null;
+    const DEFAULT_COLOR = 0x8a8a8a;
+    const group = new THREE.Group();
+    scene.add(group);
     const loader = new STLLoader();
 
-    function showGeometry(geometry, name) {
-      if (mesh) {
-        scene.remove(mesh);
-        mesh.geometry.dispose();
+    function clearGroup() {
+      for (const child of [...group.children]) {
+        group.remove(child);
+        child.geometry.dispose();
+        child.material.dispose();
       }
-      geometry.computeVertexNormals();
-      geometry.center();
-      mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
+      group.position.set(0, 0, 0);
+    }
 
-      // fit camera to the model
-      geometry.computeBoundingSphere();
-      const r = geometry.boundingSphere.radius;
+    function addGeometry(geometry, color) {
+      geometry.computeVertexNormals();
+      const material = new THREE.MeshStandardMaterial({ color, roughness: 0.65, metalness: 0.1 });
+      group.add(new THREE.Mesh(geometry, material));
+    }
+
+    // recenter the whole group and fit the camera once every part is in
+    function fitView(name) {
+      const box = new THREE.Box3().setFromObject(group);
+      const center = box.getCenter(new THREE.Vector3());
+      group.position.sub(center);
+      const r = box.getSize(new THREE.Vector3()).length() / 2;
       const dist = r / Math.sin((camera.fov * Math.PI / 180) / 2) * 1.2;
       camera.position.set(dist * 0.6, dist * 0.4, dist);
       camera.near = dist / 100;
@@ -113,23 +122,33 @@
       camera.updateProjectionMatrix();
       controls.target.set(0, 0, 0);
       controls.update();
-
       status.textContent = name;
       document.title = name + ' — rocklabs.rocks';
     }
 
-    function loadURL(url) {
+    // each ?model= entry is "url" or "url|hexcolor", e.g. model=models/a.stl|cc4433
+    function loadURLs(specs) {
       status.textContent = 'loading…';
-      loader.load(
-        url,
-        geo => showGeometry(geo, url.split('/').pop()),
-        undefined,
-        () => { status.textContent = 'could not load ' + url; }
-      );
+      clearGroup();
+      let remaining = specs.length;
+      const names = [];
+      for (const spec of specs) {
+        const [url, hex] = spec.split('|');
+        names.push(url.split('/').pop());
+        loader.load(
+          url,
+          geo => {
+            addGeometry(geo, hex ? parseInt(hex, 16) : DEFAULT_COLOR);
+            if (--remaining === 0) fitView(names.join(' + '));
+          },
+          undefined,
+          () => { status.textContent = 'could not load ' + url; }
+        );
+      }
     }
 
     const params = new URLSearchParams(location.search);
-    if (params.get('model')) loadURL(params.get('model'));
+    if (params.getAll('model').length) loadURLs(params.getAll('model'));
     else status.textContent = 'no model loaded — drop an .stl file here';
 
     // drag & drop local STL files
@@ -144,7 +163,11 @@
       const file = e.dataTransfer.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = () => showGeometry(loader.parse(reader.result), file.name);
+      reader.onload = () => {
+        clearGroup();
+        addGeometry(loader.parse(reader.result), DEFAULT_COLOR);
+        fitView(file.name);
+      };
       reader.readAsArrayBuffer(file);
     });
 
