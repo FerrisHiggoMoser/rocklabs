@@ -51,6 +51,7 @@
   <header>
     <a href="index.html">&larr; rocklabs.rocks</a>
     <span id="status"></span>
+    <span id="downloads"></span>
   </header>
   <div id="drop-overlay">drop your STL file</div>
 
@@ -69,6 +70,7 @@
 
     const wrap = document.getElementById('canvas-wrap');
     const status = document.getElementById('status');
+    const downloads = document.getElementById('downloads');
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
@@ -130,11 +132,17 @@
     function loadURLs(specs) {
       status.textContent = 'loading…';
       clearGroup();
+      downloads.innerHTML = '';
       let remaining = specs.length;
       const names = [];
       for (const spec of specs) {
         const [url, hex] = spec.split('|');
         names.push(url.split('/').pop());
+        const dl = document.createElement('a');
+        dl.href = url;
+        dl.download = url.split('/').pop().split('?')[0];
+        dl.textContent = '⬇ download ' + dl.download;
+        downloads.appendChild(dl);
         loader.load(
           url,
           geo => {
