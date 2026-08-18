@@ -2,12 +2,13 @@
 
 The V5 internals inside the round-puck hull: a pure Ø46 cylinder — no port flat, no 45° slope cutoff.
 
-- Body: **Ø46 × 14.4 mm** without rubber feet
-- Same verified single-layer V5 layout inside: KB2040 and the measured 11.5 × 13.75 × 1.6 mm adapter side by side, three M2 heat-set inserts, identical internal heights
-- Top: no separate ring. The top face is a **full-width 0.9 mm cap** with the crown fillet and a clean Ø38.8 opening — the first design's bezel look, one unbroken surface. The sensor drops onto the 360° ledge, then the cap glues onto the wall's top annulus; its underside holds the sensor (no tape). The only seam is a hairline line on the side.
+- Body: **Ø46 × 14.4 mm**, completely flat underside — no foot recesses
+- **Two parts, like the first design's double print**: an open-top cup (floor + wall + ledge fused, no screws, no inserts, no bosses) and a full-width 0.9 mm cap
+- Same verified single-layer V5 layout inside: KB2040 and the measured 11.5 × 13.75 × 1.6 mm adapter side by side, identical internal heights
+- Assembly: everything drops in from the open top — electronics on the floor, sensor onto the 360° ledge — then the cap (crown fillet, clean Ø38.8 opening, centering skirt) glues on. Its underside holds the sensor; the only seam is a hairline line on the side.
 - USB-C: the **first design's port verbatim** — one 10.2 × 4.6 opening at the same height, straight through the curved wall. The plug face sits 4.2 mm behind the curved surface, the same gap the round stacked puck had.
-- `print_plate` is all three parts bed-ready: top shell face-down, bottom plate, cap crown-up
-- 55 automated dimension checks pass: shell/component interference, seat and cap overlaps, screw and insert margins, radial packing, port fit, wall-integrity probes
+- `print_plate` is both parts bed-ready: cup open-side up, cap face-down
+- 43 automated dimension checks pass: shell/component interference, seat and cap overlaps, skirt fit, radial packing, port fit, wall-integrity probes
 
 # Flat Cirque puck V5
 
