@@ -2,12 +2,12 @@
 
 The V5 internals inside the round-puck hull: a pure Ø46 cylinder — no port flat, no 45° slope cutoff.
 
-- Body: **Ø46 × 14.3 mm** without rubber feet (0.8 taller than V5 for the trim ring)
+- Body: **Ø46 × 14.4 mm** without rubber feet
 - Same verified single-layer V5 layout inside: KB2040 and the measured 11.5 × 13.75 × 1.6 mm adapter side by side, three M2 heat-set inserts, identical internal heights
-- Top: the sensor still drops in from above onto the 360° ledge, but the V5 borderless opening (with its visible 0.25 mm ring gap) is replaced by a **0.8 mm flush trim ring** glued into a rebate — clean Ø38.8 opening, no gap, and the ring retains the sensor (no tape)
-- USB-C: one 13.4 × 7.2 rounded opening straight through the curved wall, sized so the plug **overmold** enters and the plug latches fully against the connector in its V5 position — the curved surface stays uninterrupted otherwise
-- `print_plate` is all three parts bed-ready: top face-down, bottom plate, trim ring
-- 57 automated dimension checks pass: shell/component interference, seat and ring overlaps, screw and insert margins, radial packing, plug latch and pocket clearances, wall-integrity probes
+- Top: no separate ring. The top face is a **full-width 0.9 mm cap** with the crown fillet and a clean Ø38.8 opening — the first design's bezel look, one unbroken surface. The sensor drops onto the 360° ledge, then the cap glues onto the wall's top annulus; its underside holds the sensor (no tape). The only seam is a hairline line on the side.
+- USB-C: the **first design's port verbatim** — one 10.2 × 4.6 opening at the same height, straight through the curved wall. The plug face sits 4.2 mm behind the curved surface, the same gap the round stacked puck had.
+- `print_plate` is all three parts bed-ready: top shell face-down, bottom plate, cap crown-up
+- 55 automated dimension checks pass: shell/component interference, seat and cap overlaps, screw and insert margins, radial packing, port fit, wall-integrity probes
 
 # Flat Cirque puck V5
 
