@@ -2,14 +2,14 @@
 
 The V5 internals inside the round-puck hull: a pure Ø46 cylinder — no port flat, no 45° slope cutoff.
 
-- Body: **Ø46 × 13.5 mm**, completely flat underside — no foot recesses
-- **Two parts, top and bottom, screwed**: top shell with three wall-buried M2 heat-set insert bosses, bottom plate with countersunk holes for three M2×6 screws
+- Body: **Ø46 × 13.5 mm**, flat adhesive-foot pads with shallow placement outlines—no deep foot recesses
+- **Two parts, top and bottom, screwed**: top shell with four wall-buried M2 heat-set insert bosses, bottom plate with countersunk holes for four M2×6 screws
 - Same verified single-layer V5 layout inside: KB2040 and the measured 11.5 × 13.75 × 1.6 mm adapter side by side, identical internal heights
-- Top: borderless — the sensor drops in from above through the Ø40.5 opening and rests flush on the continuous 360° ledge; nothing sits over it (a thin ring of double-sided tape on the ledge keeps it seated)
+- Top: borderless — the sensor drops in from above through the Ø40.5 opening and rests flush in a self-supporting double-45° seat; four small printable ribs provide light retention
 - USB-C: the **first design's port verbatim** — one 10.2 × 4.6 opening at the same height, straight through the curved wall. The plug face sits 4.2 mm behind the curved surface, the same gap the round stacked puck had.
-- `print_plate` is both parts bed-ready: top shell face-down, bottom plate beside it
-- `assembled` shows the closed case with the trackpad resting on the ledge
-- 47 automated dimension checks pass: shell/component interference, ledge seat, screw and insert margins, radial packing, port fit, wall-integrity probes
+- The single public `print_plate` STL contains both parts beside each other: top seam/open-side down with its smooth face upward, bottom exterior down
+- `assembled` shows the closed case with the trackpad resting in the conical seat
+- 57 automated dimension checks pass: shell/component interference, actual 4.10 mm Cirque connector, conical seat, four screw/insert margins, four foot locations, radial packing, original port fit, and wall-integrity probes
 
 # Flat Cirque puck V5
 
