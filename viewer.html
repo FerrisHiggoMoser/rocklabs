@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-wrap: wrap;
     padding: 0.75rem 1rem;
     z-index: 10;
     pointer-events: none;
@@ -30,6 +31,8 @@
     color: #666;
     font-size: 0.9rem;
   }
+  #downloads { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  body.embedded header { display: none; }
   #drop-overlay {
     position: fixed;
     inset: 0;
@@ -58,8 +61,9 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      "three": "./assets/vendor/three/three.module.js",
+      "three/addons/controls/OrbitControls.js": "./assets/vendor/three/OrbitControls.js",
+      "three/addons/loaders/STLLoader.js": "./assets/vendor/three/STLLoader.js"
     }
   }
   </script>
@@ -71,15 +75,19 @@
     const wrap = document.getElementById('canvas-wrap');
     const status = document.getElementById('status');
     const downloads = document.getElementById('downloads');
+    const params = new URLSearchParams(location.search);
+    const embedded = params.has('embed');
+    if (embedded) document.body.classList.add('embedded');
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
     const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 5000);
+    camera.up.set(0, 0, 1);
     camera.position.set(0, 0, 100);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(devicePixelRatio);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.setSize(innerWidth, innerHeight);
     wrap.appendChild(renderer.domElement);
 
@@ -95,6 +103,11 @@
     const group = new THREE.Group();
     scene.add(group);
     const loader = new STLLoader();
+    let loadGeneration = 0;
+
+    function tellParent(type, data = {}) {
+      if (embedded) parent.postMessage({ source: 'rocklabs-viewer', type, ...data }, location.origin);
+    }
 
     function clearGroup() {
       for (const child of [...group.children]) {
@@ -116,46 +129,72 @@
       const box = new THREE.Box3().setFromObject(group);
       const center = box.getCenter(new THREE.Vector3());
       group.position.sub(center);
-      const r = box.getSize(new THREE.Vector3()).length() / 2;
-      const dist = r / Math.sin((camera.fov * Math.PI / 180) / 2) * 1.2;
-      camera.position.set(dist * 0.6, dist * 0.4, dist);
+      const half = box.getSize(new THREE.Vector3()).multiplyScalar(0.5);
+      const direction = new THREE.Vector3(-0.40, -0.65, 0.75).normalize();
+      if (params.get('view') === 'top') {
+        direction.set(0, 0, 1);
+        camera.up.set(0, 1, 0);
+      }
+      camera.position.copy(direction);
+      camera.lookAt(0, 0, 0);
+      camera.updateMatrixWorld();
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+      const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+      const tanV = Math.tan(camera.fov * Math.PI / 360);
+      let dist = 1;
+      for (const x of [-half.x, half.x]) for (const y of [-half.y, half.y]) for (const z of [-half.z, half.z]) {
+        const corner = new THREE.Vector3(x, y, z);
+        const depth = corner.dot(direction);
+        dist = Math.max(dist, depth + Math.abs(corner.dot(right)) / (tanV * camera.aspect), depth + Math.abs(corner.dot(up)) / tanV);
+      }
+      dist *= 1.15;
+      camera.position.copy(direction).multiplyScalar(dist);
       camera.near = dist / 100;
       camera.far = dist * 100;
       camera.updateProjectionMatrix();
       controls.target.set(0, 0, 0);
       controls.update();
       status.textContent = name;
+      status.dataset.loaded = 'true';
       document.title = name + ' — rocklabs.rocks';
+      tellParent('loaded', { name });
     }
 
     // each ?model= entry is "url" or "url|hexcolor", e.g. model=models/a.stl|cc4433
-    function loadURLs(specs) {
+    async function loadURLs(specs) {
+      const generation = ++loadGeneration;
       status.textContent = 'loading…';
+      status.dataset.loaded = 'false';
       clearGroup();
       downloads.innerHTML = '';
-      let remaining = specs.length;
-      const names = [];
-      for (const spec of specs) {
+      const entries = specs.map(spec => {
         const [url, hex] = spec.split('|');
-        names.push(url.split('/').pop());
+        return { url, color: /^[0-9a-f]{6}$/i.test(hex || '') ? parseInt(hex, 16) : DEFAULT_COLOR };
+      });
+      const results = await Promise.allSettled(entries.map(({ url }) => loader.loadAsync(url)));
+      if (generation !== loadGeneration) {
+        results.forEach(result => { if (result.status === 'fulfilled') result.value.dispose(); });
+        return;
+      }
+      const failures = [];
+      results.forEach((result, i) => {
+        const { url, color } = entries[i];
+        if (result.status === 'rejected') { failures.push(url); return; }
+        addGeometry(result.value, color);
         const dl = document.createElement('a');
         dl.href = url;
         dl.download = url.split('/').pop().split('?')[0];
         dl.textContent = '⬇ download ' + dl.download;
         downloads.appendChild(dl);
-        loader.load(
-          url,
-          geo => {
-            addGeometry(geo, hex ? parseInt(hex, 16) : DEFAULT_COLOR);
-            if (--remaining === 0) fitView(names.join(' + '));
-          },
-          undefined,
-          () => { status.textContent = 'could not load ' + url; }
-        );
+      });
+      if (group.children.length) fitView(params.get('label') || entries.map(({ url }) => url.split('/').pop().split('?')[0]).join(' + '));
+      if (failures.length) {
+        status.textContent = 'could not load ' + failures.join(', ');
+        status.dataset.loaded = 'error';
+        tellParent('error', { message: status.textContent });
       }
     }
 
-    const params = new URLSearchParams(location.search);
     if (params.getAll('model').length) loadURLs(params.getAll('model'));
     else status.textContent = 'no model loaded — drop an .stl file here';
 
@@ -172,9 +211,15 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = () => {
+        ++loadGeneration;
         clearGroup();
-        addGeometry(loader.parse(reader.result), DEFAULT_COLOR);
-        fitView(file.name);
+        downloads.innerHTML = '';
+        try {
+          addGeometry(loader.parse(reader.result), DEFAULT_COLOR);
+          fitView(file.name);
+        } catch {
+          status.textContent = 'could not read this STL file';
+        }
       };
       reader.readAsArrayBuffer(file);
     });

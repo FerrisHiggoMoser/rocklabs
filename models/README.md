@@ -1,3 +1,16 @@
+# Corne magnetic dock
+
+[Website preview](../dock.html) · [Print and fit guide](../cad/outputs/corne_dock/README.md)
+
+`corne_puck_dock_print.stl` is a separate magnetic cradle for the V6 puck, with a
+straight face beside the Corne, a foot-clearance opening, and a rear USB notch.
+Start with `corne_puck_dock_fit_coupon.stl`. The default fits a 46 mm body with
+0.25 mm clearance per side; physical Keebart measurements still need confirmation.
+
+`*_preview_*` files contain assembled components and an explicitly labelled
+upstream reference outline. **They are not print downloads.** The generator
+records actual checks and dimensions in `corne_puck_dock_dimensions.json`.
+
 # Round Cirque puck V6
 
 The V5 internals inside the round-puck hull: a pure Ø46 cylinder — no port flat, no 45° slope cutoff.
