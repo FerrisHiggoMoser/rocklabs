@@ -1,0 +1,7 @@
+# CAD exports are opaque artifacts; preserve exporter/source bytes verbatim.
+*.stl binary
+*.step binary -whitespace
+cad/outputs/** linguist-generated
+models/*.stl linguist-generated
+assets/vendor/** linguist-vendored -whitespace
+cad/references/FOOSTAN_LICENSE_CC.txt -whitespace

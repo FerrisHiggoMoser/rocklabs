@@ -1,0 +1,214 @@
+{
+  "status": "CAD verified; physical keyboard fit not yet measured",
+  "units": "mm",
+  "config": {
+    "alignment": "keycaps",
+    "keyboard_case_height": 8.2,
+    "keyboard_keycap_height_from_underside": 16.0,
+    "keyboard_foot_height": 2.0,
+    "keyboard_foot_diameter": 8.0,
+    "keyboard_feet_in_mount": [],
+    "puck_diameter": 46.0,
+    "puck_height": 13.5,
+    "puck_foot_height": 4.5,
+    "puck_foot_diameter": 10.0,
+    "radial_clearance": 0.25,
+    "case_gap": 0.3,
+    "wall": 1.6,
+    "underlap": 56.0,
+    "arm_width": 32.0,
+    "magnet_diameter": 8.0,
+    "magnet_thickness": 1.0,
+    "magnet_clearance": 0.2,
+    "magnet_glue_allowance": 0.1,
+    "magnet_floor": 0.6,
+    "steel_target_thickness": 0.2,
+    "target_adhesive_thickness": 0.1,
+    "notes": {
+      "verified": "Puck envelope/feet are from the V6 CAD; 8.2 mm case/plate profile is annotated in Keebart's lowprofile.webp product image.",
+      "measure_before_printing": "Keyboard foot size/positions and 16 mm underside-to-keycap height are adjustable assumptions, not published Keebart dimensions. Puck feet are CAD assumptions; measure the fitted rubber feet. No exact Keebart case outline is claimed.",
+      "placement": "Default: inner straight edge of the right half; keyboard extends toward +X, USB exits toward +Y. Position along that edge using the fit coupon. Do not mirror blindly: the existing puck's USB port is offset."
+    }
+  },
+  "derived": {
+    "puck_center_x": -25.150000000000002,
+    "puck_bottom_z": 4.5,
+    "touch_plane_z": 18.0,
+    "keyboard_underside_z": 2.0,
+    "keyboard_lift": 0.0,
+    "arm_top_z": 1.7,
+    "cradle_inner_diameter": 46.5,
+    "cradle_outer_diameter": 49.7,
+    "foot_opening_diameter": 36.0,
+    "magnet_centers": [
+      [
+        18.0,
+        -9.0
+      ],
+      [
+        18.0,
+        9.0
+      ],
+      [
+        43.0,
+        -9.0
+      ],
+      [
+        43.0,
+        9.0
+      ]
+    ],
+    "magnet_pocket_diameter": 8.2,
+    "magnet_pocket_depth": 1.1,
+    "magnet_floor_thickness": 0.5999999999999999,
+    "case_gap": 0.3,
+    "alignment_datum": 16.0
+  },
+  "print_size": [
+    105.999,
+    49.7,
+    18.0
+  ],
+  "sources": [
+    {
+      "path": "cad/outputs/round_puck_v6/cirque_round_puck_v6_top.step",
+      "sha256": "f0bf7304734788e8705bffe46d94305778fc7c9d0a449bb1ba473f8b9ce012c9"
+    },
+    {
+      "path": "cad/outputs/round_puck_v6/cirque_round_puck_v6_bottom.step",
+      "sha256": "cd908bde6b6a8dcaebb15ce2a9b21e8edc079255a244a7de99f71a080787ca99"
+    }
+  ],
+  "checks": [
+    {
+      "name": "dock single valid solid",
+      "pass": true,
+      "detail": "1 solid(s)"
+    },
+    {
+      "name": "dock on print bed",
+      "pass": true,
+      "detail": "Z minimum = 0 mm"
+    },
+    {
+      "name": "fit coupon single valid solid",
+      "pass": true,
+      "detail": "1 solid(s)"
+    },
+    {
+      "name": "fit coupon on print bed",
+      "pass": true,
+      "detail": "Z minimum = 0 mm"
+    },
+    {
+      "name": "no dock collision: original V6 enclosure",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: puck feet",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: USB plug corridor",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: screwdriver access",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: keyboard contact envelope",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: magnets",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "no dock collision: steel targets",
+      "pass": true,
+      "detail": "intersection = 0.000000 mm3"
+    },
+    {
+      "name": "touch and selected keyboard datum flush",
+      "pass": true,
+      "detail": "both at 18.000 mm, based on configured dimensions"
+    },
+    {
+      "name": "original puck feet remain above desk",
+      "pass": true,
+      "detail": "feet Z = 0.000 mm"
+    },
+    {
+      "name": "magnet pocket floor",
+      "pass": true,
+      "detail": "floor 0.600 mm"
+    },
+    {
+      "name": "steel plus adhesive reaches keyboard",
+      "pass": true,
+      "detail": "magnets meet added steel targets"
+    },
+    {
+      "name": "four separated magnets",
+      "pass": true,
+      "detail": "4 magnets"
+    },
+    {
+      "name": "clearance fit",
+      "pass": true,
+      "detail": "0.25 mm per side"
+    },
+    {
+      "name": "frame supports puck underside",
+      "pass": true,
+      "detail": "annular bearing ledge outside the feet"
+    },
+    {
+      "name": "print STL manifold",
+      "pass": true,
+      "detail": "1 closed mesh component(s); volume 11120.31 mm3"
+    },
+    {
+      "name": "fit_coupon STL manifold",
+      "pass": true,
+      "detail": "1 closed mesh component(s); volume 7410.26 mm3"
+    },
+    {
+      "name": "preview_puck STL manifold",
+      "pass": true,
+      "detail": "2 closed mesh component(s); volume 6793.96 mm3"
+    },
+    {
+      "name": "preview_sensor STL manifold",
+      "pass": true,
+      "detail": "1 closed mesh component(s); volume 1243.74 mm3"
+    },
+    {
+      "name": "preview_feet STL manifold",
+      "pass": true,
+      "detail": "4 closed mesh component(s); volume 1413.34 mm3"
+    },
+    {
+      "name": "preview_hardware STL manifold",
+      "pass": true,
+      "detail": "4 closed mesh component(s); volume 241.21 mm3"
+    },
+    {
+      "name": "preview_keyboard_reference STL manifold",
+      "pass": true,
+      "detail": "1 closed mesh component(s); volume 82098.49 mm3"
+    },
+    {
+      "name": "preview_keycaps_reference STL manifold",
+      "pass": true,
+      "detail": "23 closed mesh component(s); volume 21535.47 mm3"
+    }
+  ]
+}

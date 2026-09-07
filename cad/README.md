@@ -5,6 +5,11 @@ CadQuery scripts and exported models for the Cirque TM040040 trackpad enclosure 
 
 ## Layout
 
+- `corne_dock.json` — adjustable external dock fit and height parameters
+- `work/generate_corne_dock.py` — magnetic Corne dock for the latest V6 puck;
+  validates and exports the separate accessory without changing its electronics
+- `outputs/corne_dock/` — fit coupon, dock STL/STEP, assembly, and dimension report
+- `references/` — attributed upstream Corne silhouette for the website preview
 - `work/` — CadQuery generator and verification scripts
   - `generate_flat_puck_v5.py` — flat puck V5 (Ø46×13.5, borderless top-load)
   - `generate_round_puck_v6.py` — round puck V6 (screwed top+bottom, borderless open top)
@@ -13,6 +18,19 @@ CadQuery scripts and exported models for the Cirque TM040040 trackpad enclosure 
 - `outputs/` — exported STL/STEP files and per-design READMEs
 
 ## Running the scripts
+
+For the new dock on Linux, from the repository root:
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r cad/requirements.txt
+.venv/bin/python cad/work/generate_corne_dock.py --publish-models
+```
+
+The last option updates **local** website assets. See
+[the dock guide](outputs/corne_dock/README.md) before printing; exact Keebart foot
+dimensions and keycap height need measuring. Open `../dock.html` through a local
+HTTP server for the assembly and download page.
 
 The scripts need CadQuery on Python 3.12 (3.14 does not work with the prebuilt wheels):
 
