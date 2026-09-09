@@ -1,3 +1,17 @@
+# Suspended, angled attachment
+
+[New model page](../suspended.html) · [Print and fit guide](../cad/outputs/corne_suspended/README.md)
+
+`corne_puck_suspended_print_kit.zip` contains the new three-part mechanical
+attachment: a padded case clamp, 15° angled carrier and bolted retaining ring.
+Start with `corne_puck_suspended_fit_coupon.stl`. The full plate is
+`corne_puck_suspended_print_plate.stl`; five M3 bolts, nuts, washers and rubber
+pads are required. Check the 56 mm case edge, bare 4 mm upper ledge and clear
+14 mm underside before printing. This is a CAD prototype, not a tested load rating.
+All `*_preview_*` and `*_suspended_suspended_*` files are reference-only meshes.
+
+The existing designs below are retained.
+
 # Corne magnetic dock
 
 [Website preview](../dock.html) · [Print and fit guide](../cad/outputs/corne_dock/README.md)

@@ -5,6 +5,11 @@ CadQuery scripts and exported models for the Cirque TM040040 trackpad enclosure 
 
 ## Layout
 
+- `corne_suspended.json` — separate padded clamp and fixed-angle puck attachment
+- `work/generate_corne_suspended.py` — mechanical case jaws and bolted retaining
+  ring for an elevated keyboard; does not modify the original dock or puck
+- `outputs/corne_suspended/` — three-part print plate, individual STLs/STEPs,
+  fit coupon, assembly, print kit and [fit/load-test guide](outputs/corne_suspended/README.md)
 - `corne_dock.json` — adjustable external dock fit and height parameters
 - `work/generate_corne_dock.py` — magnetic Corne dock for the latest V6 puck;
   validates and exports the separate accessory without changing its electronics

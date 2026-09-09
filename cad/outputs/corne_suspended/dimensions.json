@@ -1,0 +1,450 @@
+{
+  "status": "CAD checked; physical fit and suspended load not yet tested",
+  "units": "mm",
+  "config": {
+    "tilt_degrees": 15.0,
+    "keyboard_case_height": 8.2,
+    "keyboard_keycap_height_from_underside": 16.0,
+    "keyboard_upper_lip": 4.0,
+    "keyboard_underlap": 14.0,
+    "clamp_span": 56.0,
+    "pad_thickness": 0.8,
+    "puck_center_offset": 45.0,
+    "touch_center_height": 18.0,
+    "radial_clearance": 0.25,
+    "puck_foot_height": 4.5,
+    "notes": {
+      "basis": "Separate accessory for the existing V6 diameter 46 x 13.5 mm puck. Keyboard case height is inherited from the magnetic dock; it is not a measurement of your keyboard.",
+      "fit_required": "Requires 56 mm of straight, closed case edge, a bare 4 mm top ledge, and a clear 14 mm underside strip. Keep clear of moving keys, ports, feet, and the keyboard suspension mount. Do not clamp a bare PCB or switches.",
+      "angle": "Fixed 15 degrees toward the keyboard, relative to the keyboard case plane. Rebuild to change the angle; there is no live hinge.",
+      "suspension": "The keyboard's own mount supports the keyboard. This accessory carries only the puck from the keyboard case; it is not a suspension anchor.",
+      "padding": "0.8 mm is the installed pad thickness on each jaw. Use firm rubber with adhesive backing, including the adhesive in the measurement.",
+      "status": "CAD prototype. Physical fit, clamp friction, printed strength and long-term creep have not been load-tested."
+    }
+  },
+  "derived": {
+    "tilt_degrees_relative_to_keyboard": 15.0,
+    "cradle_inner_diameter": 46.5,
+    "retainer_opening_diameter": 42,
+    "sensor_diameter": 40,
+    "puck_floor": 2.8,
+    "puck_top_local": 16.3,
+    "retainer_underside_local": 16.55,
+    "puck_axial_clearance": 0.25,
+    "touch_center_z": 18.0,
+    "puck_center_x": -45.0,
+    "carrier_origin_z": 2.2554090314881865,
+    "required_straight_edge": 56.0,
+    "required_bare_top_ledge": 4.0,
+    "required_clear_underside_strip": 14.0,
+    "clamp_bolt_centers": [
+      [
+        -7,
+        -22.0
+      ],
+      [
+        -7,
+        22.0
+      ]
+    ],
+    "ring_bolt_centers_local": [
+      [
+        16.060140217829293,
+        22.93625724009177
+      ],
+      [
+        -28.0,
+        3.429011037612589e-15
+      ],
+      [
+        16.06014021782929,
+        -22.93625724009177
+      ]
+    ],
+    "clamp_bolt_length": 20,
+    "retainer_bolt_length": 20,
+    "clamp_bolt_projection_below_nut": 0.6999999999999993,
+    "retainer_bolt_projection_below_nut": 0.5500000000000007,
+    "pad_cut_sizes": [
+      [
+        13.0,
+        50.0
+      ],
+      [
+        3.0,
+        50.0
+      ],
+      [
+        46.0,
+        8.2
+      ]
+    ],
+    "print_orientation": "Carrier on its side; upper jaw and retainer flat. Inspect local cradle supports in slicer.",
+    "hardware": [
+      "2 x M3 x 20 socket-head bolts (keyboard clamp)",
+      "3 x M3 x 20 socket-head bolts (puck ring)",
+      "5 x M3 DIN 934 nuts, 5.5 AF x 2.4 high",
+      "5 x M3 washers, OD 7 / ID 3.2 / thickness 0.5",
+      "Firm rubber jaw and edge pads"
+    ]
+  },
+  "print_sizes": {
+    "carrier": [
+      90.682,
+      36.531,
+      56.0
+    ],
+    "upper_jaw": [
+      18.0,
+      56.0,
+      4.0
+    ],
+    "retainer": [
+      58.8,
+      55.471,
+      2.4
+    ],
+    "print_plate": [
+      183.482,
+      56.0,
+      56.0
+    ],
+    "fit_coupon": [
+      114.0,
+      56.0,
+      56.0
+    ]
+  },
+  "checks": [
+    {
+      "name": "carrier: one valid solid",
+      "pass": true,
+      "detail": "1 solid(s)"
+    },
+    {
+      "name": "carrier: clear of existing puck",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of sensor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of feet",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of keyboard case envelope",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of key travel beyond bare ledge",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of USB plug corridor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of case screwdriver paths",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of hardware",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: clear of pads",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: one valid solid",
+      "pass": true,
+      "detail": "1 solid(s)"
+    },
+    {
+      "name": "upper_jaw: clear of existing puck",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of sensor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of feet",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of keyboard case envelope",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of key travel beyond bare ledge",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of USB plug corridor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of case screwdriver paths",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of hardware",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw: clear of pads",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: one valid solid",
+      "pass": true,
+      "detail": "1 solid(s)"
+    },
+    {
+      "name": "retainer: clear of existing puck",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of sensor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of feet",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of keyboard case envelope",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of key travel beyond bare ledge",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of USB plug corridor",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of case screwdriver paths",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of hardware",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "retainer: clear of pads",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier / upper_jaw: assembled separation",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier / retainer: assembled separation",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "upper_jaw / retainer: assembled separation",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "carrier: print bed datum",
+      "pass": true,
+      "detail": "Z minimum = 0"
+    },
+    {
+      "name": "upper_jaw: print bed datum",
+      "pass": true,
+      "detail": "Z minimum = 0"
+    },
+    {
+      "name": "retainer: print bed datum",
+      "pass": true,
+      "detail": "Z minimum = 0"
+    },
+    {
+      "name": "coupon 1: valid connected solid on bed",
+      "pass": true,
+      "detail": "Exact jaw surfaces or bore gauge"
+    },
+    {
+      "name": "coupon 2: valid connected solid on bed",
+      "pass": true,
+      "detail": "Exact jaw surfaces or bore gauge"
+    },
+    {
+      "name": "coupon 3: valid connected solid on bed",
+      "pass": true,
+      "detail": "Exact jaw surfaces or bore gauge"
+    },
+    {
+      "name": "puck movement blocked: left",
+      "pass": true,
+      "detail": "1 mm translation meets stop (364.203 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck movement blocked: right",
+      "pass": true,
+      "detail": "1 mm translation meets stop (361.448 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck movement blocked: front",
+      "pass": true,
+      "detail": "1 mm translation meets stop (364.203 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck movement blocked: rear",
+      "pass": true,
+      "detail": "1 mm translation meets stop (236.901 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck movement blocked: up into retainer",
+      "pass": true,
+      "detail": "1 mm translation meets stop (165.075 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck movement blocked: down into shelf",
+      "pass": true,
+      "detail": "1 mm translation meets stop (541.253 mm3); geometric retention, not a load test"
+    },
+    {
+      "name": "puck insertion clear at +1 mm",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "puck insertion clear at +8 mm",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "puck insertion clear at +20 mm",
+      "pass": true,
+      "detail": "intersection 0.000000 mm3"
+    },
+    {
+      "name": "clamp: full nut engagement",
+      "pass": true,
+      "detail": "0.700 mm bolt projection beyond 2.4 mm nut"
+    },
+    {
+      "name": "retainer: full nut engagement",
+      "pass": true,
+      "detail": "0.550 mm bolt projection beyond 2.4 mm nut"
+    },
+    {
+      "name": "touch surface fully uncovered",
+      "pass": true,
+      "detail": "42 mm opening around 40 mm active surface"
+    },
+    {
+      "name": "carrier: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 21989.05 mm3"
+    },
+    {
+      "name": "upper_jaw: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 3955.96 mm3"
+    },
+    {
+      "name": "retainer: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 2107.98 mm3"
+    },
+    {
+      "name": "print_plate: closed STL",
+      "pass": true,
+      "detail": "3 component(s); 28052.99 mm3"
+    },
+    {
+      "name": "fit_coupon: closed STL",
+      "pass": true,
+      "detail": "3 component(s); 13814.73 mm3"
+    },
+    {
+      "name": "preview_carrier: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 21989.05 mm3"
+    },
+    {
+      "name": "preview_upper_jaw: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 3955.96 mm3"
+    },
+    {
+      "name": "preview_retainer: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 2107.98 mm3"
+    },
+    {
+      "name": "preview_puck: closed STL",
+      "pass": true,
+      "detail": "2 component(s); 6792.07 mm3"
+    },
+    {
+      "name": "preview_sensor: closed STL",
+      "pass": true,
+      "detail": "1 component(s); 1243.56 mm3"
+    },
+    {
+      "name": "preview_feet: closed STL",
+      "pass": true,
+      "detail": "4 component(s); 1413.13 mm3"
+    },
+    {
+      "name": "preview_hardware: closed STL",
+      "pass": true,
+      "detail": "15 component(s); 1368.45 mm3"
+    },
+    {
+      "name": "preview_pads: closed STL",
+      "pass": true,
+      "detail": "3 component(s); 941.76 mm3"
+    }
+  ],
+  "sources": [
+    {
+      "path": "cad/outputs/round_puck_v6/cirque_round_puck_v6_top.step",
+      "sha256": "f0bf7304734788e8705bffe46d94305778fc7c9d0a449bb1ba473f8b9ce012c9"
+    },
+    {
+      "path": "cad/outputs/round_puck_v6/cirque_round_puck_v6_bottom.step",
+      "sha256": "cd908bde6b6a8dcaebb15ce2a9b21e8edc079255a244a7de99f71a080787ca99"
+    }
+  ]
+}
