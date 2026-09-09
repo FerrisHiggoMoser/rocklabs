@@ -5,6 +5,10 @@ CadQuery scripts and exported models for the Cirque TM040040 trackpad enclosure 
 
 ## Layout
 
+- `corne_dual.json` / `work/generate_corne_dual.py` — new flat-and-suspended
+  attachment, with a thin under-case lip, raised clamp nuts and permanent desk legs
+- `outputs/corne_dual/` — separate models and [fit/assembly guide](outputs/corne_dual/README.md);
+  the configured keyboard stays level on its original feet without risers
 - `corne_suspended.json` — separate padded clamp and fixed-angle puck attachment
 - `work/generate_corne_suspended.py` — mechanical case jaws and bolted retaining
   ring for an elevated keyboard; does not modify the original dock or puck
