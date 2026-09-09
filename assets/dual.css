@@ -1,0 +1,8 @@
+.tabs { flex-wrap:wrap; }
+.tabs button { white-space:nowrap; }
+.revision-link { margin:0 0 24px; font-size:13px; }
+footer { gap:12px 20px; flex-wrap:wrap; }
+@media (max-width:760px) {
+  .tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .tabs button { padding:7px 4px; }
+}

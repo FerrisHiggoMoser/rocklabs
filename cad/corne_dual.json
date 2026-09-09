@@ -1,0 +1,25 @@
+{
+  "tilt_degrees": 15.0,
+  "keyboard_case_height": 8.2,
+  "keyboard_keycap_height_from_underside": 16.0,
+  "keyboard_foot_height": 2.0,
+  "keyboard_upper_lip": 4.0,
+  "keyboard_underlap": 8.0,
+  "lower_lip_thickness": 1.2,
+  "clamp_span": 56.0,
+  "pad_thickness": 0.5,
+  "desk_pad_thickness": 0.8,
+  "puck_center_offset": 45.0,
+  "touch_center_height": 21.5,
+  "radial_clearance": 0.25,
+  "puck_foot_height": 4.5,
+  "notes": {
+    "basis": "Separate revision for both flat desk and suspended use of the intact V6 diameter 46 x 13.5 mm puck.",
+    "fit_required": "Requires 56 mm of straight closed case edge, a bare 4 mm upper ledge, and a clear 8 mm underside strip. Keep away from keys, ports, feet and suspension hardware.",
+    "flat": "Keyboard remains level on its existing feet. The default assumes 2 mm installed keyboard feet; the 1.2 mm lower lip plus 0.5 mm pad leave 0.3 mm desk clearance. Measure your feet and rebuild if different. No keyboard risers are included or required for this configuration.",
+    "supports": "Two integral puck legs, with 0.8 mm rubber sole pads, meet the same desk plane as the keyboard feet. Match pad heights physically to prevent rocking.",
+    "angle": "Fixed 15 degree inward puck tilt in both positions; no parts are moved or removed between desk and suspended use.",
+    "suspension": "The keyboard's own mount carries the complete assembly. This accessory supports the puck, not the keyboard suspension.",
+    "status": "CAD prototype. Physical fit, clamp friction, printed strength, pad compression and long-term creep require testing."
+  }
+}

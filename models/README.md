@@ -1,3 +1,15 @@
+# Flat and suspended attachment
+
+[New model page](../dual.html) · [Print and fit guide](../cad/outputs/corne_dual/README.md)
+
+`corne_puck_dual_print_kit.zip` and `corne_puck_dual_print_plate.stl` contain the
+new version for both desk and suspended use. Its 1.2 mm lip and 0.5 mm pad clear
+the desk on the assumed 2 mm keyboard feet; permanent puck legs carry desk loads.
+The same assembly stays attached in both positions. Use two M3 × 12 clamp bolts
+and three M3 × 20 ring bolts. Print `corne_puck_dual_fit_coupon.stl` first and
+measure your actual feet. This is a CAD prototype requiring physical testing.
+`*_flat_*`, `*_suspended_*` and `*_preview_*` are reference-only meshes.
+
 # Suspended, angled attachment
 
 [New model page](../suspended.html) · [Print and fit guide](../cad/outputs/corne_suspended/README.md)
