@@ -1,0 +1,21 @@
+{
+  "tilt_degrees": 15.0,
+  "keyboard_case_height": 8.2,
+  "keyboard_keycap_height_from_underside": 16.0,
+  "keyboard_upper_lip": 4.0,
+  "keyboard_underlap": 14.0,
+  "clamp_span": 56.0,
+  "pad_thickness": 0.8,
+  "puck_center_offset": 45.0,
+  "touch_center_height": 18.0,
+  "radial_clearance": 0.25,
+  "puck_foot_height": 4.5,
+  "notes": {
+    "basis": "Separate accessory for the existing V6 diameter 46 x 13.5 mm puck. Keyboard case height is inherited from the magnetic dock; it is not a measurement of your keyboard.",
+    "fit_required": "Requires 56 mm of straight, closed case edge, a bare 4 mm top ledge, and a clear 14 mm underside strip. Keep clear of moving keys, ports, feet, and the keyboard suspension mount. Do not clamp a bare PCB or switches.",
+    "angle": "Fixed 15 degrees toward the keyboard, relative to the keyboard case plane. Rebuild to change the angle; there is no live hinge.",
+    "suspension": "The keyboard's own mount supports the keyboard. This accessory carries only the puck from the keyboard case; it is not a suspension anchor.",
+    "padding": "0.8 mm is the installed pad thickness on each jaw. Use firm rubber with adhesive backing, including the adhesive in the measurement.",
+    "status": "CAD prototype. Physical fit, clamp friction, printed strength and long-term creep have not been load-tested."
+  }
+}

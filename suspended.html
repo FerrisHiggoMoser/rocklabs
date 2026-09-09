@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A separate, printable clamp-on attachment for the Corne and round puck. A retained cradle, a 15 degree tilt, and an interactive suspended preview.">
+  <title>Suspended puck attachment — rocklabs.rocks</title>
+  <link rel="stylesheet" href="assets/dock.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">rocklabs.rocks <span aria-hidden="true">↗</span></a>
+    <a href="dock.html">Original magnetic dock ↗</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">ROUND PUCK / SUSPENDED ATTACHMENT</p>
+        <h1>Along for<br>the lift.</h1>
+      </div>
+      <div class="intro-copy">
+        <p>Your trackpad, attached beside your keyboard. A padded screw clamp, a bolted retaining ring, and a 15° tilt toward your hand. Designed to move with your suspended setup.</p>
+        <span class="status"><i></i> New fit prototype · physical load testing needed</span>
+      </div>
+    </section>
+
+    <section class="viewer-card" aria-label="Interactive attachment preview">
+      <div class="viewer-toolbar">
+        <div class="tabs" role="group" aria-label="Choose model view">
+          <button type="button" data-mode="suspended" aria-pressed="true">Suspended</button>
+          <button type="button" data-mode="attachment" aria-pressed="false">Attachment</button>
+          <button type="button" data-mode="print" aria-pressed="false">Print plate</button>
+          <button type="button" data-mode="coupon" aria-pressed="false">Fit check</button>
+        </div>
+        <span class="viewer-help">Drag to rotate · scroll to zoom</span>
+      </div>
+      <div class="viewport">
+        <iframe id="model-view" title="3D preview of the suspended puck attachment" src="viewer.html?embed=1&amp;label=Suspended%20puck%20%E2%80%94%20suspended&amp;model=models/corne_puck_suspended_suspended_carrier.stl%7Caaba96&amp;model=models/corne_puck_suspended_suspended_upper_jaw.stl%7Caaba96&amp;model=models/corne_puck_suspended_suspended_retainer.stl%7C8d9f78&amp;model=models/corne_puck_suspended_suspended_puck.stl%7C434a49&amp;model=models/corne_puck_suspended_suspended_sensor.stl%7C222827&amp;model=models/corne_puck_suspended_suspended_feet.stl%7C333333&amp;model=models/corne_puck_suspended_suspended_hardware.stl%7Ca8aaa5&amp;model=models/corne_puck_suspended_suspended_pads.stl%7C333333&amp;model=models/corne_puck_suspended_suspended_keyboard_reference.stl%7Cdedfd9&amp;model=models/corne_puck_suspended_suspended_keycaps_reference.stl%7Cb7bdb2" allow="fullscreen"></iframe>
+        <p id="load-status" role="status">Loading the actual STL files…</p>
+      </div>
+      <div class="viewer-caption">
+        <p id="view-caption">Illustrative 35° keyboard tent, with the puck tilted another 15° toward the keyboard. Green: new attachment. Pale: reference Corne and keys. Your suspension hardware is not modeled.</p>
+        <a id="open-viewer" href="viewer.html?model=models/corne_puck_suspended_preview_carrier.stl">Open viewer ↗</a>
+      </div>
+    </section>
+
+    <section class="spec-strip" aria-label="Attachment specifications">
+      <div><span>ANGLE TO KEYBOARD</span><strong id="tilt">15° <small>inward</small></strong><p>Fixed in the print · no hinge</p></div>
+      <div><span>KEYBOARD CONNECTION</span><strong>2 <small>clamp bolts</small></strong><p>Padded upper and lower case jaws</p></div>
+      <div><span>PUCK RETENTION</span><strong>3 <small>ring bolts</small></strong><p>Ø42 mm opening keeps touch area clear</p></div>
+      <div><span>PRINTED PARTS</span><strong>3 <small>pieces</small></strong><p>Carrier · upper jaw · retaining ring</p></div>
+    </section>
+
+    <section class="details-grid">
+      <article>
+        <p class="eyebrow">01 / BUILT TO COME WITH YOU</p>
+        <h2>Clamp the case. Capture the puck.</h2>
+        <p>Two screws draw padded jaws around the keyboard’s case edge. Reinforced arms carry the angled cradle; a removable ring holds the puck above its supporting shelf. The keyboard’s own suspension mount carries the combined assembly.</p>
+        <p>The puck stays in its original enclosure, with its feet attached and USB accessible at the rear. Remove the three ring screws to take it out. The attachment extends below the keyboard’s usual feet and is intended for an elevated setup.</p>
+      </article>
+      <article>
+        <p class="eyebrow">02 / FIT YOUR SETUP</p>
+        <h2>A little measuring before the lift.</h2>
+        <p>The default needs an 8.2 mm thick closed case, 56 mm of straight edge, a bare 4 mm top ledge, and 14 mm of clear underside. Print the fit check first and test full key travel, ports, feet, and suspension-mount clearance.</p>
+        <p>These are configurable fit assumptions. If that ledge or underside space is missing, the default clamp does not fit. Test grip and normal touch pressure close above a soft surface before suspended use; printed strength and long-term holding force are not yet measured.</p>
+      </article>
+    </section>
+
+    <section class="downloads" aria-labelledby="download-heading">
+      <div class="download-heading">
+        <p class="eyebrow">03 / MAKE THE NEW ONE</p>
+        <h2 id="download-heading">A separate attachment. Ready to try.</h2>
+        <p>PETG · 0.20 mm layers · 5–6 walls · inspect carrier supports in your slicer</p>
+      </div>
+      <div class="download-cards">
+        <a class="download-card primary" href="models/corne_puck_suspended_fit_coupon.stl" download>
+          <span>START HERE</span><strong>Fit check <b>↓</b></strong><p>Two real clamp jaws and a puck bore gauge. Check the case, keys, padding, and fastener fit.</p><small>STL · three small test pieces</small>
+        </a>
+        <a class="download-card" href="models/corne_puck_suspended_print_plate.stl" download>
+          <span>AFTER CHECKING THE FIT</span><strong>Full attachment <b>↓</b></strong><p>All three final pieces, oriented for printing. Add five bolts, nuts, washers, and rubber pads.</p><small id="print-size">STL · dimensions loading</small>
+        </a>
+        <a class="download-card" href="models/corne_puck_suspended_print_kit.zip" download>
+          <span>KEEP THE WHOLE KIT</span><strong>Print kit + CAD <b>↓</b></strong><p>Individual STLs, the full plate, fit check, editable STEP files, assembly guide, and dimension report.</p><small>ZIP · all manufacturing files</small>
+        </a>
+      </div>
+      <p class="hardware" id="hardware">Default hardware: 5 × M3 × 20 mm socket-head bolts, 5 × M3 DIN 934 nuts, 5 × 0.5 mm thick M3 washers, and 0.8 mm firm rubber pads. See the guide for exact dimensions and assembly order.</p>
+    </section>
+
+    <details>
+      <summary>Individual files, assembly instructions, and checks <span>+</span></summary>
+      <div class="reference-content">
+        <p id="validation">CAD and mesh check results are included with this new design.</p>
+        <p>Geometry checks include retention stops in all six directions. They do not establish a suspended load rating or physical compatibility with your case.</p>
+        <div class="resource-links">
+          <a href="cad/outputs/corne_suspended/README.md">Print & assembly guide ↗</a>
+          <a href="models/corne_puck_suspended_carrier.stl" download>Carrier STL ↓</a>
+          <a href="models/corne_puck_suspended_upper_jaw.stl" download>Upper jaw STL ↓</a>
+          <a href="models/corne_puck_suspended_retainer.stl" download>Retaining ring STL ↓</a>
+          <a href="cad/outputs/corne_suspended/corne_puck_suspended_assembly.step" download>Assembly STEP ↓</a>
+          <a href="models/corne_puck_suspended_dimensions.json">Dimensions & checks ↗</a>
+          <a href="cad/corne_suspended.json" download>Fit & angle parameters ↓</a>
+          <a href="cad/work/generate_corne_suspended.py" download>CAD generator ↓</a>
+          <a href="cad/references/README.md">Reference attribution ↗</a>
+        </div>
+      </div>
+    </details>
+  </main>
+  <footer><a href="index.html">All models ↗</a><a href="dock.html">Magnetic desk dock ↗</a><a href="viewer.html?model=models/cirque_round_puck_v6_print_plate.stl%3Fv%3D5">Original puck ↗</a></footer>
+  <script src="assets/suspended.js" defer></script>
+</body>
+</html>
