@@ -34,9 +34,10 @@ Licensed under **Creative Commons Attribution 4.0 International**; see
 The generated `corne_puck_dock_preview_keyboard_reference.stl` extracts the
 bottom face's outer wire, fills internal features, extrudes the silhouette to the
 configured case height, and translates it beside the dock. Those modifications
-are for visual orientation only. Its outline is approximately 138.35 × 97.62 mm,
-measured from this upstream STEP, **not from a Keebart case**. No claim of
-Keebart endorsement or exact compatibility is made.
+are for visual orientation only. Its outline is 136.35 × 95.62 mm, measured
+along the outer wire of this upstream STEP (the solid's loose bounding box reads
+138.35 × 97.62 mm), **not from a Keebart case**. No claim of Keebart endorsement
+or exact compatibility is made.
 
 The separate keycap preview is an illustrative 23-key layout with rounded boxes
 at the configured keycap height. It is not a measured Keebart keycap profile or
@@ -44,6 +45,14 @@ a key-clearance test. Check full thumb-key travel with the physical fit coupon.
 
 The reference silhouette is excluded from every printable STL and from the dock
 STEP assembly. Geometry checks use a local straight case-edge envelope instead.
+
+The neoprene travel case (`../work/generate_corne_case.py`) reuses the same
+outline and places its keys at the switch positions of foostan's Corne v4.1
+choc PCB, [pcbs/corne-chocolate/hotswap/corne-chocolate.kicad_pcb](https://github.com/foostan/crkbd/blob/main/pcbs/corne-chocolate/hotswap/corne-chocolate.kicad_pcb),
+retrieved 2026-11-09 under the same CC BY 4.0 license. Only the switch centres
+and rotations are used; the four mounting holes the PCB shares with the case
+STEP give the offset between them. The resulting keyboard is a render and fit
+reference, not Keebart geometry.
 
 ## Existing puck
 

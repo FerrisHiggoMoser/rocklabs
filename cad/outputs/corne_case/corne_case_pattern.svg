@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+  <rect width="210" height="297" fill="#fff"/>
+  <rect x="12.50" y="22.50" width="185" height="252" fill="none" stroke="#111" stroke-width="0.5"/>
+  <g stroke="#555" stroke-width="0.3" stroke-dasharray="3 2">
+    <line x1="22.50" y1="22.50" x2="22.50" y2="274.50"/>
+    <line x1="187.50" y1="22.50" x2="187.50" y2="274.50"/>
+  </g>
+  <line x1="12.50" y1="148.50" x2="197.50" y2="148.50" stroke="#111" stroke-width="0.35" stroke-dasharray="8 2 1 2"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#222" font-size="3.2" text-anchor="middle">
+    <text x="105.0" y="146.50">FOLD</text>
+    <text x="105.0" y="29.50">OPENING · top of the sleeve</text>
+    <text x="105.0" y="270.50">OPENING · underside of the sleeve</text>
+    <text x="105.0" y="18.50">185 mm</text>
+    <text transform="translate(203.50 148.50) rotate(90)">252 mm</text>
+    <text transform="translate(20.50 85.50) rotate(-90)">sew 10 mm in</text>
+    <text transform="translate(192.00 85.50) rotate(-90)">sew 10 mm in</text>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#222" text-anchor="middle">
+    <text x="105.0" y="81.50" font-size="5.5" font-weight="700">CORNE SLEEVE · CUT 2</text>
+    <text x="105.0" y="88.50" font-size="3.2">3 mm neoprene fabric · one piece per keyboard half</text>
+    <text x="105.0" y="93.50" font-size="3.2">Fits a 136.4 × 95.6 × 23.0 mm half</text>
+  </g>
+  <line x1="12.50" y1="285.50" x2="62.50" y2="285.50" stroke="#111" stroke-width="0.8"/>
+  <text x="65.50" y="286.70" font-size="3.2" font-family="Helvetica, Arial, sans-serif" fill="#222">This bar is 50 mm when printed at 100 %. A4, actual size.</text>
+</svg>

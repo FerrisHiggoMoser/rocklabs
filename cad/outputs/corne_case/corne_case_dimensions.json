@@ -1,0 +1,221 @@
+{
+  "status": "Render and sewing pattern; keyboard inputs as listed, encoder knob height assumed",
+  "units": "mm",
+  "config": {
+    "keyboard_case_height": 8.2,
+    "keyboard_keycap_height_from_underside": 16.0,
+    "keyboard_foot_height": 2.0,
+    "keyboard_foot_diameter": 8.0,
+    "keycap_width": 17.5,
+    "keycap_depth": 16.5,
+    "keycap_height": 3.3,
+    "encoder_knob_diameter": 14.0,
+    "encoder_knob_above_keycaps": 5.0,
+    "neoprene_thickness": 3.0,
+    "seam_allowance": 10.0,
+    "girth_allowance": 5.0,
+    "depth_allowance": 3.0,
+    "mouth_overlap": 4.0,
+    "elastic_width": 30.0,
+    "elastic_thickness": 1.5,
+    "elastic_stretch": 0.85,
+    "elastic_join_overlap": 20.0,
+    "divider_thickness": 1.5,
+    "notes": {
+      "keyboard": "Same keyboard inputs as the Corne dock: the 8.2 mm case/plate profile is from Keebart's product image; the 16 mm keycap height and 2 mm feet are earlier rocklabs assumptions. The half outline is the upstream foostan Corne v4 3x6 case, not a Keebart drawing.",
+      "encoder": "Knob size and height are not known. 5 mm above the keycaps is an assumption; measure yours and rebuild if it sits higher.",
+      "sleeve": "One rectangle per half, folded at the far end and sewn up both sides. Girth allowance covers the 3 mm fabric wrapping round the half, so the sleeve is snug. The mouth needs no hem because neoprene does not fray.",
+      "elastic": "Each band is a closed loop of 30 mm elastic, cut at 85 % of the packed girth plus a 20 mm overlap for sewing it shut. The guide's 1 m is enough for either arrangement."
+    }
+  },
+  "derived": {
+    "keyboard_half": {
+      "length": 136.4,
+      "depth": 95.6,
+      "keycap_top_above_desk": 18.0,
+      "knob_top_above_desk": 23.0,
+      "packed_height": 23.0
+    },
+    "sleeve": {
+      "cut_width": 185,
+      "cut_length": 252,
+      "pieces": 2,
+      "seam_line_width": 164.4,
+      "fold_to_opening": 125.6,
+      "fold_from_end": 126.0,
+      "outside": [
+        144.4,
+        103.6,
+        29.5
+      ]
+    },
+    "neoprene_needed": [
+      370,
+      252
+    ],
+    "packed": {
+      "side_by_side": [
+        144.4,
+        210.5,
+        32.5
+      ],
+      "stacked": [
+        144.4,
+        106.6,
+        63.5
+      ]
+    },
+    "elastic_loops": {
+      "side_by_side": [
+        419,
+        419
+      ],
+      "stacked": [
+        295,
+        295
+      ]
+    },
+    "divider": [
+      136.4,
+      95.6
+    ],
+    "slide_out_shown": 52.6
+  },
+  "checks": [
+    {
+      "name": "keycaps inside the case outline",
+      "pass": true,
+      "detail": "22 keys, 0 corner(s) outside; confirms the PCB-to-case transform"
+    },
+    {
+      "name": "encoder knob over the case",
+      "pass": true,
+      "detail": "\u00d814 knob at the upper extra key position"
+    },
+    {
+      "name": "pattern fits A4 at actual size",
+      "pass": true,
+      "detail": "185 \u00d7 252 mm inside a 190 \u00d7 270 mm printable area"
+    },
+    {
+      "name": "both halves fit inside their sleeves",
+      "pass": true,
+      "detail": "0.00 mm3 overlap with the 3 mm fabric; 1 mm play each side"
+    },
+    {
+      "name": "half slides through the open mouth",
+      "pass": true,
+      "detail": "0.00 mm3 overlap"
+    },
+    {
+      "name": "bands sit on the side by side sleeves",
+      "pass": true,
+      "detail": "0.00 mm3 overlap"
+    },
+    {
+      "name": "bands sit on the stacked sleeves",
+      "pass": true,
+      "detail": "0.00 mm3 overlap"
+    },
+    {
+      "name": "elastic for side by side within 1 m",
+      "pass": true,
+      "detail": "2 loops of 419 mm = 838 mm"
+    },
+    {
+      "name": "elastic for stacked within 1 m",
+      "pass": true,
+      "detail": "2 loops of 295 mm = 590 mm"
+    },
+    {
+      "name": "side sleeves STL closed",
+      "pass": true,
+      "detail": "volume 860395 mm3"
+    },
+    {
+      "name": "side bands STL closed",
+      "pass": true,
+      "detail": "volume 42161 mm3"
+    },
+    {
+      "name": "stacked sleeves STL closed",
+      "pass": true,
+      "detail": "volume 860395 mm3"
+    },
+    {
+      "name": "stacked bands STL closed",
+      "pass": true,
+      "detail": "volume 29035 mm3"
+    },
+    {
+      "name": "stacked divider STL closed",
+      "pass": true,
+      "detail": "volume 19536 mm3"
+    },
+    {
+      "name": "sliding sleeve STL closed",
+      "pass": true,
+      "detail": "volume 105942 mm3"
+    },
+    {
+      "name": "sliding case STL closed",
+      "pass": true,
+      "detail": "volume 82098 mm3"
+    },
+    {
+      "name": "sliding keycaps STL closed",
+      "pass": true,
+      "detail": "volume 21116 mm3"
+    },
+    {
+      "name": "sliding switches STL closed",
+      "pass": true,
+      "detail": "volume 12569 mm3"
+    },
+    {
+      "name": "sliding knob STL closed",
+      "pass": true,
+      "detail": "volume 1578 mm3"
+    },
+    {
+      "name": "sliding feet STL closed",
+      "pass": true,
+      "detail": "volume 402 mm3"
+    },
+    {
+      "name": "cutaway sleeves STL closed",
+      "pass": true,
+      "detail": "volume 196442 mm3"
+    },
+    {
+      "name": "cutaway bands STL closed",
+      "pass": true,
+      "detail": "volume 34483 mm3"
+    },
+    {
+      "name": "cutaway case STL closed",
+      "pass": true,
+      "detail": "volume 140758 mm3"
+    },
+    {
+      "name": "cutaway keycaps STL closed",
+      "pass": true,
+      "detail": "volume 36421 mm3"
+    },
+    {
+      "name": "cutaway switches STL closed",
+      "pass": true,
+      "detail": "volume 21622 mm3"
+    },
+    {
+      "name": "cutaway knob STL closed",
+      "pass": true,
+      "detail": "volume 2367 mm3"
+    },
+    {
+      "name": "cutaway feet STL closed",
+      "pass": true,
+      "detail": "volume 603 mm3"
+    }
+  ]
+}

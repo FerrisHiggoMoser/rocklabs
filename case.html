@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A sewn neoprene travel case for both Corne Choc Pro halves: 3D render, keyboard measurements, cut sizes and a 1:1 A4 pattern.">
+  <title>Corne neoprene travel case — rocklabs.rocks</title>
+  <link rel="stylesheet" href="assets/dock.css">
+  <link rel="stylesheet" href="assets/dual.css">
+  <link rel="stylesheet" href="assets/case.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="index.html">rocklabs.rocks <span aria-hidden="true">↗</span></a>
+    <a href="models/corne_case_pattern.svg">Print the pattern ↗</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">CORNE CHOC PRO / NEOPRENE TRAVEL CASE</p>
+        <h1>Pack both<br>halves.</h1>
+      </div>
+      <div class="intro-copy">
+        <p>Two neoprene sleeves, one per half, held together by two loops of black 30 mm elastic. Sized from the keyboard measurements already on this site, with keycaps, feet and the encoder knob included. Just the keyboard: no puck, no attachment.</p>
+        <span class="status"><i></i> Sewing pattern · knob height assumed</span>
+      </div>
+    </section>
+
+    <section class="viewer-card" aria-label="Interactive case preview">
+      <div class="viewer-toolbar">
+        <div class="tabs" role="group" aria-label="Choose model view">
+          <button type="button" data-mode="side" aria-pressed="true">Side by side</button>
+          <button type="button" data-mode="stacked" aria-pressed="false">Stacked</button>
+          <button type="button" data-mode="sliding" aria-pressed="false">Sliding in</button>
+          <button type="button" data-mode="cutaway" aria-pressed="false">Cutaway</button>
+        </div>
+        <span class="viewer-help">Drag to rotate · scroll to zoom</span>
+      </div>
+      <div class="viewport">
+        <iframe id="model-view" title="3D preview of the Corne neoprene travel case" src="viewer.html?embed=1&amp;label=Corne%20neoprene%20case%20%E2%80%94%20side%20by%20side&amp;model=models%2Fcorne_case_side_sleeves.stl%7C3a3d41&amp;model=models%2Fcorne_case_side_bands.stl%7C151617" allow="fullscreen"></iframe>
+        <p id="load-status" role="status">Loading the actual STL files…</p>
+      </div>
+      <div class="viewer-caption">
+        <p id="view-caption">Long edges together, openings facing out. Two elastic loops run across both sleeves and hold both openings shut. Packed it is 144 × 211 × 33 mm, about the size of an A5 notebook.</p>
+        <a id="open-viewer" href="viewer.html?model=models/corne_case_side_sleeves.stl">Open viewer ↗</a>
+      </div>
+    </section>
+
+    <section class="spec-strip" aria-label="Case measurements">
+      <div><span>ONE HALF</span><strong><b data-fill="derived.keyboard_half.length">136.4</b> × <b data-fill="derived.keyboard_half.depth">95.6</b> <small>mm</small></strong><p><b data-fill="derived.keyboard_half.packed_height">23</b> mm tall at the encoder knob</p></div>
+      <div><span>NEOPRENE PER SLEEVE</span><strong><b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> <small>mm</small></strong><p>3 mm fabric · cut 2</p></div>
+      <div><span>ELASTIC, 30 MM</span><strong>2 × <b data-fill="derived.elastic_loops.side_by_side.0">419</b> <small>mm</small></strong><p>Side by side · 2 × <b data-fill="derived.elastic_loops.stacked.0">295</b> mm stacked</p></div>
+      <div><span>PACKED</span><strong><b data-fill="derived.packed.side_by_side">144 × 211 × 33</b> <small>mm</small></strong><p>Side by side · <b data-fill="derived.packed.stacked">144 × 107 × 64</b> mm stacked</p></div>
+    </section>
+
+    <section class="measure-grid">
+      <article>
+        <p class="eyebrow">01 / YOUR KEYBOARD</p>
+        <h2>What the case is sized from.</h2>
+        <table>
+          <tr><th>Half outline</th><td><b data-fill="derived.keyboard_half.length">136.4</b> × <b data-fill="derived.keyboard_half.depth">95.6</b> mm<small>Upstream Corne v4 3x6 case; Keebart publishes no outline</small></td></tr>
+          <tr><th>Case and plate</th><td><b data-fill="config.keyboard_case_height">8.2</b> mm<small>Keebart's product image</small></td></tr>
+          <tr><th>Keycap tops</th><td><b data-fill="derived.keyboard_half.keycap_top_above_desk">18</b> mm above the desk<small>16 mm above the case underside on 2 mm feet, both earlier assumptions on this site</small></td></tr>
+          <tr><th>Rubber feet</th><td>Ø<b data-fill="config.keyboard_foot_diameter">8</b> × <b data-fill="config.keyboard_foot_height">2</b> mm<small>Assumed</small></td></tr>
+          <tr><th>Encoder knob</th><td>Ø<b data-fill="config.encoder_knob_diameter">14</b> mm, top <b data-fill="derived.keyboard_half.knob_top_above_desk">23</b> mm above the desk<small>Assumed <b data-fill="config.encoder_knob_above_keycaps">5</b> mm above the keycaps. If yours sits higher, add the difference once to the width and twice to the length of the pattern.</small></td></tr>
+          <tr><th>Keys</th><td>22 keys and an encoder per half<small>19.05 mm pitch, from the Corne v4.1 choc PCB</small></td></tr>
+        </table>
+      </article>
+      <article>
+        <p class="eyebrow">02 / CUT LIST</p>
+        <h2>What to cut.</h2>
+        <table>
+          <tr><th>Neoprene, 3 mm, fabric both sides</th><td>2 × <b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> mm<small>One <b data-fill="derived.neoprene_needed">370 × 252</b> mm piece covers both</small></td></tr>
+          <tr><th>Fold line</th><td><b data-fill="derived.sleeve.fold_from_end">126</b> mm from either short end</td></tr>
+          <tr><th>Seam allowance</th><td><b data-fill="config.seam_allowance">10</b> mm, both long sides</td></tr>
+          <tr><th>Elastic, 30 mm, black</th><td>2 loops × <b data-fill="derived.elastic_loops.side_by_side.0">419</b> mm side by side<small>Or 2 × <b data-fill="derived.elastic_loops.stacked.0">295</b> mm stacked. Each includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut.</small></td></tr>
+          <tr><th>Divider, stacked only</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>1–1.5 mm stiff plastic or card</small></td></tr>
+        </table>
+      </article>
+    </section>
+
+    <section class="pattern" aria-labelledby="pattern-heading">
+      <a class="pattern-sheet" href="models/corne_case_pattern.svg"><img src="models/corne_case_pattern.svg" alt="Cut pattern: a 185 by 252 mm rectangle with a fold line across the middle and a 10 mm seam line along both long sides" width="210" height="297"></a>
+      <div>
+        <p class="eyebrow">03 / PATTERN</p>
+        <h2 id="pattern-heading">Print it at actual size.</h2>
+        <ol class="steps">
+          <li>Print the pattern on A4 at 100 % and check that the bar measures 50 mm. Trace it onto the neoprene twice and cut.</li>
+          <li>Fold each piece at the fold line, outside faces together, and hold the sides with sewing clips.</li>
+          <li>Sew both long sides 10 mm in. Leave the short ends open: together they are the opening. Neoprene does not fray, so they need no hem.</li>
+          <li>Turn each sleeve right side out and slide a half in. Sew each elastic loop shut with its overlap and slip both loops over the packed sleeves.</li>
+        </ol>
+        <p class="pattern-links"><a href="models/corne_case_pattern.svg" download>Pattern, A4 SVG ↓</a></p>
+      </div>
+    </section>
+
+    <details>
+      <summary>Files, sources and checks <span>+</span></summary>
+      <div class="reference-content">
+        <p id="validation">CAD and mesh check results are in the dimension report.</p>
+        <p>The keyboard model uses the switch positions from foostan's Corne v4.1 choc PCB and the outline of the upstream 3x6 case (CC BY 4.0). Keebart's own case may differ slightly; the neoprene stretches enough to cover that.</p>
+        <div class="resource-links">
+          <a href="models/corne_case_pattern.svg" download>Pattern SVG ↓</a>
+          <a href="models/corne_case_dimensions.json">Dimensions & checks ↗</a>
+          <a href="cad/corne_case.json" download>Keyboard & case parameters ↓</a>
+          <a href="cad/work/generate_corne_case.py" download>CAD generator ↓</a>
+          <a href="cad/references/README.md">Reference attribution ↗</a>
+        </div>
+      </div>
+    </details>
+  </main>
+  <footer><a href="index.html">All models ↗</a></footer>
+  <script src="assets/case.js" defer></script>
+</body>
+</html>
