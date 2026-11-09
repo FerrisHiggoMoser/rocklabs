@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 417 368" width="834" height="736">
+  <rect width="417" height="368" fill="#fff"/>
+  <rect x="34" y="34" width="349" height="300" fill="none" stroke="#111" stroke-width="1.4"/>
+  <g stroke="#555" stroke-width="1" stroke-dasharray="6 4">
+    <line x1="44.0" y1="34" x2="44.0" y2="334"/>
+    <line x1="373.0" y1="34" x2="373.0" y2="334"/>
+  </g>
+  <line x1="208.5" y1="34" x2="208.5" y2="334" stroke="#111" stroke-width="1" stroke-dasharray="16 4 3 4"/>
+  <line x1="34" y1="184.0" x2="383" y2="184.0" stroke="#b3261e" stroke-width="2.4"/>
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle" font-size="13" fill="#222">
+    <text x="208.5" y="22">349 mm</text>
+    <text transform="translate(403 109.0) rotate(90)">300 mm</text>
+    <text x="121.25" y="58">OPENING</text>
+    <text x="121.25" y="320">OPENING</text>
+    <text transform="translate(201.5 109.0) rotate(-90)">FOLD</text>
+    <text transform="translate(60.0 259.0) rotate(-90)">SEAM 10 MM IN</text>
+    <text transform="translate(364.0 259.0) rotate(-90)">SEAM 10 MM IN</text>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle" font-size="13" fill="#b3261e">
+    <text x="295.75" y="175.0">MIDDLE SEAM</text>
+    <text x="295.75" y="205.0">150 mm from each end</text>
+  </g>
+</svg>

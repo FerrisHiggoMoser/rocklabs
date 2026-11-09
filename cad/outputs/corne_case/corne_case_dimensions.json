@@ -1,5 +1,5 @@
 {
-  "status": "Render and sewing pattern; keyboard inputs as listed, encoder knob height assumed",
+  "status": "Render and cutting diagram; keyboard inputs as listed, encoder knob height assumed",
   "units": "mm",
   "config": {
     "keyboard_case_height": 8.2,
@@ -24,9 +24,9 @@
     "notes": {
       "keyboard": "Same keyboard inputs as the Corne dock: the 8.2 mm case/plate profile is from Keebart's product image; the 16 mm keycap height and 2 mm feet are earlier rocklabs assumptions. The half outline is the upstream foostan Corne v4 3x6 case, not a Keebart drawing.",
       "encoder": "Knob size and height are not known. 5 mm above the keycaps is an assumption; measure yours and rebuild if it sits higher.",
-      "sleeve": "One rectangle per half, folded at the far end and sewn up both sides. Girth allowance covers the 3 mm fabric wrapping round the half, so the sleeve is snug. The mouth needs no hem because neoprene does not fray.",
-      "hinge": "The two sleeves are sewn together along their folded ends on the keycap side, so the case opens flat and folds shut like a book with the halves face to face.",
-      "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed book's girth plus a 20 mm overlap for sewing it shut."
+      "tube": "One rectangle sewn into a tube along its two long sides, then one seam across the middle makes the two pockets. Girth allowance covers the 3 mm fabric wrapping round each half, so the pockets are snug. The openings need no hem because neoprene does not fray.",
+      "hinge": "The middle seam is the hinge. Closed, the stretch of tube between the halves wraps the spine as a half circle, so each pocket gets half of that as extra depth.",
+      "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed case's girth plus a 20 mm overlap for sewing it shut."
     }
   },
   "derived": {
@@ -37,46 +37,45 @@
       "knob_top_above_desk": 23.0,
       "packed_height": 23.0
     },
-    "sleeve": {
-      "cut_width": 185,
-      "cut_length": 252,
-      "pieces": 2,
-      "seam_line_width": 164.4,
-      "fold_to_opening": 125.6,
-      "fold_from_end": 126.0,
-      "outside": [
-        144.4,
-        103.6,
-        29.5
-      ]
+    "piece": {
+      "width": 349,
+      "length": 300,
+      "flat_width": 164.4,
+      "pocket_depth": 150.0,
+      "hinge_web": 48.7,
+      "pieces": 1,
+      "middle_seam_from_end": 150.0
     },
-    "hinge_length": 120,
-    "neoprene_needed": [
-      370,
-      252
+    "piece_if_knob_10mm": [
+      359,
+      318
+    ],
+    "pocket_outside": [
+      144.4,
+      103.6,
+      29.5
     ],
     "packed": {
       "closed": [
         144.4,
-        106.6,
-        63.5
+        125.2,
+        63.6
       ],
       "open": [
         144.4,
-        207.2,
-        29.7
+        255.9,
+        29.5
       ]
     },
     "elastic_loops": {
       "closed": [
-        295
+        307
       ]
     },
     "divider": [
       136.4,
       95.6
-    ],
-    "slide_out_shown": 52.6
+    ]
   },
   "checks": [
     {
@@ -90,24 +89,14 @@
       "detail": "\u00d814 knob at the upper extra key position"
     },
     {
-      "name": "pattern fits A4 at actual size",
-      "pass": true,
-      "detail": "185 \u00d7 252 mm inside a 190 \u00d7 270 mm printable area"
-    },
-    {
-      "name": "book folds shut and opens flat",
-      "pass": true,
-      "detail": "0.00 mm3 overlap between the sleeves, closed or open"
-    },
-    {
-      "name": "strap sits on the closed book",
-      "pass": true,
-      "detail": "0.00 mm3 overlap"
-    },
-    {
-      "name": "both halves fit inside their sleeves",
+      "name": "both halves fit inside their pockets",
       "pass": true,
       "detail": "0.00 mm3 overlap with the 3 mm fabric; 1 mm play each side"
+    },
+    {
+      "name": "strap sits on the closed case",
+      "pass": true,
+      "detail": "0.00 mm3 overlap"
     },
     {
       "name": "half slides through the open mouth",
@@ -117,17 +106,17 @@
     {
       "name": "elastic within the 1 m from the guide",
       "pass": true,
-      "detail": "one loop of 295 mm"
+      "detail": "one loop of 307 mm"
     },
     {
       "name": "closed sleeves STL closed",
       "pass": true,
-      "detail": "volume 862054 mm3"
+      "detail": "volume 902950 mm3"
     },
     {
       "name": "closed strap STL closed",
       "pass": true,
-      "detail": "volume 14518 mm3"
+      "detail": "volume 15160 mm3"
     },
     {
       "name": "closed divider STL closed",
@@ -137,47 +126,42 @@
     {
       "name": "open sleeves STL closed",
       "pass": true,
-      "detail": "volume 861685 mm3"
+      "detail": "volume 578637 mm3"
     },
     {
-      "name": "sliding sleeve STL closed",
-      "pass": true,
-      "detail": "volume 105942 mm3"
-    },
-    {
-      "name": "sliding case STL closed",
+      "name": "open case STL closed",
       "pass": true,
       "detail": "volume 82098 mm3"
     },
     {
-      "name": "sliding keycaps STL closed",
+      "name": "open keycaps STL closed",
       "pass": true,
       "detail": "volume 21116 mm3"
     },
     {
-      "name": "sliding switches STL closed",
+      "name": "open switches STL closed",
       "pass": true,
       "detail": "volume 12569 mm3"
     },
     {
-      "name": "sliding knob STL closed",
+      "name": "open knob STL closed",
       "pass": true,
       "detail": "volume 1578 mm3"
     },
     {
-      "name": "sliding feet STL closed",
+      "name": "open feet STL closed",
       "pass": true,
       "detail": "volume 402 mm3"
     },
     {
       "name": "cutaway sleeves STL closed",
       "pass": true,
-      "detail": "volume 71915 mm3"
+      "detail": "volume 71933 mm3"
     },
     {
       "name": "cutaway strap STL closed",
       "pass": true,
-      "detail": "volume 5234 mm3"
+      "detail": "volume 5242 mm3"
     },
     {
       "name": "cutaway divider STL closed",

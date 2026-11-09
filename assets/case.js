@@ -4,27 +4,25 @@ const caption = document.getElementById('view-caption');
 const openViewer = document.getElementById('open-viewer');
 const buttons = [...document.querySelectorAll('[data-mode]')];
 const colors = {
-  sleeves: '3a3d41', sleeve: '3a3d41', strap: '151617', divider: 'd8ccb0',
+  sleeves: '3a3d41', strap: '151617', divider: 'd8ccb0',
   case: 'cfd2cb', keycaps: 'f0efe9', switches: '2a2b2d', knob: '8f9396', feet: '333333',
 };
 const keyboard = ['case', 'keycaps', 'switches', 'knob', 'feet'];
 const files = {
   closed: ['sleeves', 'strap', 'divider'],
-  open: ['sleeves'],
-  sliding: ['sleeve', ...keyboard],
+  open: ['sleeves', ...keyboard],
   cutaway: ['sleeves', 'strap', 'divider', ...keyboard],
 };
-const labels = { closed: 'closed', open: 'open', sliding: 'sliding in', cutaway: 'cutaway' };
+const labels = { closed: 'closed', open: 'open', cutaway: 'cutaway' };
 let report = null;
 
 // Fallback numbers match the published report; they are replaced once it loads.
 function captionFor(mode) {
-  const packed = report ? report.derived.packed : { closed: [144, 107, 64], open: [144, 207, 30] };
+  const packed = report ? report.derived.packed : { closed: [144, 125, 64], open: [144, 256, 30] };
   const size = values => values.map(Math.round).join(' × ');
   return {
-    closed: `Folded shut with the hinge seam along the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is ${size(packed.closed)} mm.`,
-    open: `Open flat, the two sleeves lie side by side, joined along their closed ends by the hinge seam. The openings face outward. ${size(packed.open)} mm.`,
-    sliding: 'Each half slides into its own sleeve through the opening. The fit is snug; the neoprene stretches enough to get it in.',
+    closed: `Folded shut at the middle seam, which rolls round the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is ${size(packed.closed)} mm.`,
+    open: `Open flat, it is one tube with the middle seam across it: two pockets, openings at both ends. Here the left half slides into its pocket. ${size(packed.open)} mm.`,
     cutaway: 'Closed and cut through both encoder knobs. The halves meet key over key and knob over knob, with 3 mm of fabric each and the divider between them.',
   }[mode];
 }
@@ -72,7 +70,7 @@ fetch('models/corne_case_dimensions.json')
     caption.textContent = captionFor(currentMode());
     const passed = report.checks.filter(check => check.pass).length;
     const validation = document.getElementById('validation');
-    validation.textContent = `${passed} of ${report.checks.length} CAD and mesh checks pass, including both halves fitting inside their sleeves, the book folding shut and opening flat, and every key inside the case outline.`;
+    validation.textContent = `${passed} of ${report.checks.length} CAD and mesh checks pass, including both halves fitting inside their pockets, the strap sitting on the closed case, and every key inside the case outline.`;
     if (passed !== report.checks.length) validation.textContent += ' Check the failed items in the report before cutting.';
   })
   .catch(() => {});

@@ -14,9 +14,10 @@ CadQuery scripts and exported models for the Cirque TM040040 trackpad enclosure 
   ring for an elevated keyboard; does not modify the original dock or puck
 - `outputs/corne_suspended/` — three-part print plate, individual STLs/STEPs,
   fit coupon, assembly, print kit and [fit/load-test guide](outputs/corne_suspended/README.md)
-- `corne_case.json` / `work/generate_corne_case.py` — sewn neoprene travel case for
-  both keyboard halves, hinged like a book with one elastic strap, no puck; render models, a 1:1 A4 cut pattern and the dimension
-  report go to `outputs/corne_case/` (`--publish-models` copies them to `models/`)
+- `corne_case.json` / `work/generate_corne_case.py` — one-piece neoprene tube case for
+  both keyboard halves that folds like a book, one elastic strap, no puck; render models,
+  a cutting diagram and the dimension report go to `outputs/corne_case/`
+  (`--publish-models` copies them to `models/`)
 - `corne_dock.json` — adjustable external dock fit and height parameters
 - `work/generate_corne_dock.py` — magnetic Corne dock for the latest V6 puck;
   validates and exports the separate accessory without changing its electronics

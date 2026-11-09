@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A sewn neoprene travel case for both Corne Choc Pro halves that folds shut like a book: 3D render, keyboard measurements, cut sizes and a 1:1 A4 pattern.">
+  <meta name="description" content="A hand-sewn neoprene travel case for both Corne Choc Pro halves: one piece of fabric, two straight seams, folds shut like a book. 3D render, measurements and step-by-step instructions.">
   <title>Corne neoprene travel case — rocklabs.rocks</title>
   <link rel="stylesheet" href="assets/dock.css">
   <link rel="stylesheet" href="assets/dual.css">
@@ -12,7 +12,7 @@
 <body>
   <header class="site-header">
     <a class="wordmark" href="index.html">rocklabs.rocks <span aria-hidden="true">↗</span></a>
-    <a href="models/corne_case_pattern.svg">Print the pattern ↗</a>
+    <a href="#make">How to make it ↓</a>
   </header>
   <main>
     <section class="intro">
@@ -21,8 +21,8 @@
         <h1>Closes like<br>a book.</h1>
       </div>
       <div class="intro-copy">
-        <p>Two neoprene sleeves, one per half, sewn together along their closed ends. Open, they lie flat side by side. Fold one over the other, keycaps facing in, and one loop of black 30 mm elastic holds it shut. Sized from the keyboard measurements already on this site. Just the keyboard: no puck, no attachment.</p>
-        <span class="status"><i></i> Sewing pattern · knob height assumed</span>
+        <p>One piece of neoprene sewn into a tube, with one seam across the middle that splits it into two pockets. That seam is also the hinge: fold the case shut, keycaps facing in, and one loop of black 30 mm elastic holds it closed. Two straight seams, all by hand. Just the keyboard: no puck, no attachment.</p>
+        <span class="status"><i></i> Two straight seams · knob height assumed</span>
       </div>
     </section>
 
@@ -31,7 +31,6 @@
         <div class="tabs" role="group" aria-label="Choose model view">
           <button type="button" data-mode="closed" aria-pressed="true">Closed</button>
           <button type="button" data-mode="open" aria-pressed="false">Open</button>
-          <button type="button" data-mode="sliding" aria-pressed="false">Sliding in</button>
           <button type="button" data-mode="cutaway" aria-pressed="false">Cutaway</button>
         </div>
         <span class="viewer-help">Drag to rotate · scroll to zoom</span>
@@ -41,16 +40,16 @@
         <p id="load-status" role="status">Loading the actual STL files…</p>
       </div>
       <div class="viewer-caption">
-        <p id="view-caption">Folded shut with the hinge seam along the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is 144 × 107 × 64 mm.</p>
+        <p id="view-caption">Folded shut at the middle seam, which rolls round the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is 144 × 125 × 64 mm.</p>
         <a id="open-viewer" href="viewer.html?model=models/corne_case_closed_sleeves.stl">Open viewer ↗</a>
       </div>
     </section>
 
     <section class="spec-strip" aria-label="Case measurements">
       <div><span>ONE HALF</span><strong><b data-fill="derived.keyboard_half.length">136.4</b> × <b data-fill="derived.keyboard_half.depth">95.6</b> <small>mm</small></strong><p><b data-fill="derived.keyboard_half.packed_height">23</b> mm tall at the encoder knob</p></div>
-      <div><span>NEOPRENE PER SLEEVE</span><strong><b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> <small>mm</small></strong><p>3 mm fabric · cut 2</p></div>
-      <div><span>STRAP, 30 MM ELASTIC</span><strong><b data-fill="derived.elastic_loops.closed.0">295</b> <small>mm</small></strong><p>One loop, holds it shut</p></div>
-      <div><span>CLOSED</span><strong><b data-fill="derived.packed.closed">144 × 107 × 64</b> <small>mm</small></strong><p>Open flat · <b data-fill="derived.packed.open">144 × 207 × 30</b> mm</p></div>
+      <div><span>NEOPRENE</span><strong><b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> <small>mm</small></strong><p>One piece · two straight seams</p></div>
+      <div><span>STRAP, 30 MM ELASTIC</span><strong><b data-fill="derived.elastic_loops.closed.0">307</b> <small>mm</small></strong><p>One loop, holds it shut</p></div>
+      <div><span>CLOSED</span><strong><b data-fill="derived.packed.closed">144 × 125 × 64</b> <small>mm</small></strong><p>Open flat · <b data-fill="derived.packed.open">144 × 256 × 30</b> mm</p></div>
     </section>
 
     <section class="measure-grid">
@@ -62,7 +61,7 @@
           <tr><th>Case and plate</th><td><b data-fill="config.keyboard_case_height">8.2</b> mm<small>Keebart's product image</small></td></tr>
           <tr><th>Keycap tops</th><td><b data-fill="derived.keyboard_half.keycap_top_above_desk">18</b> mm above the desk<small>16 mm above the case underside on 2 mm feet, both earlier assumptions on this site</small></td></tr>
           <tr><th>Rubber feet</th><td>Ø<b data-fill="config.keyboard_foot_diameter">8</b> × <b data-fill="config.keyboard_foot_height">2</b> mm<small>Assumed</small></td></tr>
-          <tr><th>Encoder knob</th><td>Ø<b data-fill="config.encoder_knob_diameter">14</b> mm, top <b data-fill="derived.keyboard_half.knob_top_above_desk">23</b> mm above the desk<small>Assumed <b data-fill="config.encoder_knob_above_keycaps">5</b> mm above the keycaps. If yours sits higher, add the difference once to the width and twice to the length of the pattern.</small></td></tr>
+          <tr><th>Encoder knob</th><td>Ø<b data-fill="config.encoder_knob_diameter">14</b> mm, top <b data-fill="derived.keyboard_half.knob_top_above_desk">23</b> mm above the desk<small>Assumed <b data-fill="config.encoder_knob_above_keycaps">5</b> mm above the keycaps. If yours stick out about 10 mm, cut the neoprene <b data-fill="derived.piece_if_knob_10mm">359 × 318</b> mm instead.</small></td></tr>
           <tr><th>Keys</th><td>22 keys and an encoder per half<small>19.05 mm pitch, from the Corne v4.1 choc PCB</small></td></tr>
         </table>
       </article>
@@ -70,29 +69,45 @@
         <p class="eyebrow">02 / CUT LIST</p>
         <h2>What to cut.</h2>
         <table>
-          <tr><th>Neoprene, 3 mm, fabric both sides</th><td>2 × <b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> mm<small>One <b data-fill="derived.neoprene_needed">370 × 252</b> mm piece covers both</small></td></tr>
-          <tr><th>Fold line</th><td><b data-fill="derived.sleeve.fold_from_end">126</b> mm from either short end</td></tr>
-          <tr><th>Seam allowance</th><td><b data-fill="config.seam_allowance">10</b> mm, both long sides</td></tr>
-          <tr><th>Hinge seam</th><td><b data-fill="derived.hinge_length">120</b> mm along the folded ends<small>Sewn on the keycap side, so the halves fold in face to face</small></td></tr>
-          <tr><th>Strap, 30 mm black elastic</th><td>1 loop × <b data-fill="derived.elastic_loops.closed.0">295</b> mm<small>Includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut</small></td></tr>
-          <tr><th>Divider</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>1–1.5 mm stiff plastic or card between the halves, so the keycaps and knobs never press into each other</small></td></tr>
+          <tr><th>Neoprene, 3 mm, fabric both sides</th><td>1 piece, <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm<small>The whole case</small></td></tr>
+          <tr><th>Long seam</th><td><b data-fill="config.seam_allowance">10</b> mm in<small>Joins the two <b data-fill="derived.piece.length">300</b> mm sides into a tube</small></td></tr>
+          <tr><th>Middle seam</th><td><b data-fill="derived.piece.middle_seam_from_end">150</b> mm from either end<small>Splits the tube into two pockets and is the hinge</small></td></tr>
+          <tr><th>Strap, 30 mm black elastic</th><td>1 loop, <b data-fill="derived.elastic_loops.closed.0">307</b> mm<small>Includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut</small></td></tr>
+          <tr><th>Divider</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>Thin stiff plastic or card between the halves, so the keycaps and knobs never press into each other</small></td></tr>
         </table>
       </article>
     </section>
 
-    <section class="pattern" aria-labelledby="pattern-heading">
-      <a class="pattern-sheet" href="models/corne_case_pattern.svg"><img src="models/corne_case_pattern.svg" alt="Cut pattern: a 185 by 252 mm rectangle with a fold line across the middle and a 10 mm seam line along both long sides" width="210" height="297"></a>
+    <section class="make" id="make" aria-labelledby="make-heading">
+      <div class="make-side">
+        <p class="eyebrow">03 / HOW TO MAKE IT</p>
+        <h2 id="make-heading">Two seams, by hand.</h2>
+        <a class="diagram" href="models/corne_case_diagram.svg"><img src="models/corne_case_diagram.svg" alt="Cutting diagram: one 349 by 300 mm rectangle. Fold it so the two 300 mm sides meet and sew them 10 mm in to make a tube, then sew straight across the middle, 150 mm from each end." width="417" height="368"></a>
+        <h3>You need</h3>
+        <ul class="needs">
+          <li>3 mm neoprene fabric with fabric on both sides, at least <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm</li>
+          <li>Strong polyester thread and a medium or heavy hand-sewing needle</li>
+          <li>8–12 sewing clips and a thimble</li>
+          <li>30 mm black elastic, about 35 cm</li>
+          <li>Ruler or tape measure, tailor's chalk and fabric scissors</li>
+          <li>A <b data-fill="derived.divider">136 × 96</b> mm piece of thin stiff plastic or card for the divider</li>
+        </ul>
+      </div>
       <div>
-        <p class="eyebrow">03 / PATTERN</p>
-        <h2 id="pattern-heading">Print it at actual size.</h2>
+        <h3>The one stitch you need</h3>
+        <p class="stitch">Every seam is a backstitch. Knot the thread, bring the needle up through the fabric, then push it back down about 5 mm behind where it came out. Bring it up again 5 mm in front of the thread and repeat. Each stitch meets the last one, so the line is solid. Knot it again at the end.</p>
+        <h3>Steps</h3>
         <ol class="steps">
-          <li>Print the pattern on A4 at 100 % and check that the bar measures 50 mm. Trace it onto the neoprene twice and cut.</li>
-          <li>Fold each piece at the fold line, outside faces together, and hold the sides with sewing clips.</li>
-          <li>Sew both long sides 10 mm in. Leave the short ends open: together they are the opening. Neoprene does not fray, so they need no hem.</li>
-          <li>Turn both sleeves right side out. Lay them keycap side up with their folded ends touching and sew those two folds together along the top. That seam is the hinge.</li>
-          <li>Slide a half into each sleeve, keycaps up, and fold the case shut with the divider in between. Sew the elastic into a loop with its overlap and slip it round the closed case.</li>
+          <li>Mark a <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm rectangle on the neoprene with chalk and cut it out.</li>
+          <li>Fold it in half so the two <b data-fill="derived.piece.length">300</b> mm sides meet, outside faces together. Clip them every 5 cm.</li>
+          <li>Backstitch those two sides together, <b data-fill="config.seam_allowance">10</b> mm in from the edge. You now have a tube, open at both ends.</li>
+          <li>Turn the tube right side out, like a sock, and flatten it with the seam along one side.</li>
+          <li>Slide a half in from each end, keycaps up, to check the fit. Then take them out again.</li>
+          <li>Measure <b data-fill="derived.piece.middle_seam_from_end">150</b> mm from one end and chalk a line straight across. Backstitch along it through both layers. That one seam makes the two pockets and is the hinge.</li>
+          <li>For the strap, cut <b data-fill="derived.elastic_loops.closed.0">307</b> mm of elastic, overlap the ends by <b data-fill="config.elastic_join_overlap">20</b> mm and sew a small square through both layers to make a loop.</li>
+          <li>To pack, slide a half into each pocket, keycaps up. Lay the divider on one half, fold the case at the middle seam so the keycaps face each other, and slip the strap over it. The strap also holds both openings shut.</li>
         </ol>
-        <p class="pattern-links"><a href="models/corne_case_pattern.svg" download>Pattern, A4 SVG ↓</a></p>
+        <p class="make-note">Unplug the cables first, and don't pack it damp. It protects against bumps and rubbing in a bag, not crushing.</p>
       </div>
     </section>
 
@@ -102,7 +117,7 @@
         <p id="validation">CAD and mesh check results are in the dimension report.</p>
         <p>The keyboard model uses the switch positions from foostan's Corne v4.1 choc PCB and the outline of the upstream 3x6 case (CC BY 4.0). Keebart's own case may differ slightly; the neoprene stretches enough to cover that.</p>
         <div class="resource-links">
-          <a href="models/corne_case_pattern.svg" download>Pattern SVG ↓</a>
+          <a href="models/corne_case_diagram.svg" download>Cutting diagram SVG ↓</a>
           <a href="models/corne_case_dimensions.json">Dimensions & checks ↗</a>
           <a href="cad/corne_case.json" download>Keyboard & case parameters ↓</a>
           <a href="cad/work/generate_corne_case.py" download>CAD generator ↓</a>

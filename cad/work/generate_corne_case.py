@@ -1,10 +1,11 @@
 """Neoprene travel case for the two Corne Choc Pro halves. Units: mm.
 
-Sizes two sewn sleeves, hinged along their closed ends like a book, and the
-elastic strap that holds it shut from ../corne_case.json. Exports the website
-render, a 1:1 A4 cut pattern and a dimension report. Keyboard only: no puck or
-attachment. The keyboard model is for the render and the fit checks, not a
-Keebart drawing.
+One piece of neoprene sewn into a tube, with a single seam across the middle
+that makes two pockets and acts as the hinge, so the case folds shut like a
+book. One elastic strap holds it closed. Sizes everything from
+../corne_case.json and exports the website render, a cutting diagram and a
+dimension report. Keyboard only: no puck or attachment. The keyboard model is
+for the render and the fit checks, not a Keebart drawing.
 """
 from __future__ import annotations
 
@@ -117,23 +118,29 @@ def build_half(c, checks):
     return parts, envelope
 
 
-def mirrored(parts):
-    return {name: part.mirror("YZ") for name, part in parts.items()}
-
-
 def placed(parts, angle=0, offset=(0, 0, 0)):
     return {name: part.rotate((0, 0, 0), (0, 0, 1), angle).translate(offset) for name, part in parts.items()}
 
 
-def sleeve(c, env, hollow=False, open_mouth=False):
+def tube_size(c, env, extra_height=0.0):
+    t, dt = c["neoprene_thickness"], c["divider_thickness"]
+    height = env["height"] + extra_height
+    flat_width = env["length"] + height + c["girth_allowance"]
+    # Closed, the stretch of tube between the two halves wraps the spine as a half circle.
+    web = math.pi * (height + 0.5 + 2 * t + dt) / 2
+    pocket = web / 2 + env["depth"] + height + c["mouth_overlap"] + c["depth_allowance"]
+    return {"width": math.ceil(2 * flat_width + 2 * c["seam_allowance"]), "length": math.ceil(2 * pocket),
+            "flat_width": round(flat_width, 1), "pocket_depth": round(pocket, 1), "hinge_web": round(web, 1)}
+
+
+def pocket(c, env, hollow=False, open_mouth=False):
     t = c["neoprene_thickness"]
     w, d, h = env["length"] + 2 * CLEARANCE, env["depth"] + 2 * CLEARANCE, env["height"] + 0.5
     r, corner = EDGE_RADIUS + t, CORNER_RADIUS + t
     X, Y, Z = w + 2 * t, d + 2 * t, h + 2 * t
     body = rounded_box(X, Y, Z, corner, r)
-    # The side seams and the mouth show as creases once the sleeve is turned right side out.
-    for side in (-1, 1):
-        body = body.cut(cq.Workplane("XY").box(1.2, Y - 2 * corner - 4, 1.0).translate((side * X / 2, 0, Z / 2)))
+    # The tube's one long seam runs down the +X side and the mouth closes to a slit.
+    body = body.cut(cq.Workplane("XY").box(1.2, Y - 2 * corner - 4, 1.0).translate((X / 2, 0, Z / 2)))
     body = body.cut(cq.Workplane("XY").box(X - 2 * corner - 4, 1.2, 1.0).translate((0, Y / 2, Z / 2)))
     if hollow:
         extra = 12 if open_mouth else 0
@@ -141,15 +148,59 @@ def sleeve(c, env, hollow=False, open_mouth=False):
     return shape(body), (X, Y, Z, r)
 
 
-def band(c, x, zc, span_y, span_z, r):
+# Both hinge shapes reach 2.5 mm into the pockets' end walls so everything fuses into one shell.
+def hinge_open(c, X, Y, Z, web):
+    t = c["neoprene_thickness"]
+    y = -Y / 2 - web / 2
+    flat = cq.Workplane("XY").box(X, web + 5, 2 * t).translate((0, y, Z / 2))
+    for z in (Z / 2 - t, Z / 2 + t):
+        flat = flat.cut(cq.Workplane("XY").box(X - 10, 1.2, 1.2).translate((0, y, z)))
+    return shape(flat)
+
+
+def hinge_closed(c, X, Y, Z):
+    t, dt = c["neoprene_thickness"], c["divider_thickness"]
+    radius, zc = (Z + dt) / 2, Z + dt / 2
+    ring = cq.Workplane("YZ", origin=(-X / 2, 0, 0)).center(-Y / 2, zc).circle(radius + t).circle(radius - t).extrude(X)
+    half = ring.val().intersect(cq.Solid.makeBox(X + 2, radius + t + 3.5, 2 * Z + dt + 20, cq.Vector(-X / 2 - 1, -Y / 2 - radius - t - 1, -10)))
+    return half.cut(cq.Solid.makeBox(X - 10, 1.2, 1.2, cq.Vector(-X / 2 + 5, -Y / 2 - radius - t - 0.6, zc - 0.6)))
+
+
+def convex_hull(points):
+    pts = sorted(set(points))
+
+    def turn(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    lower, upper = [], []
+    for p in pts:
+        while len(lower) > 1 and turn(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    for p in reversed(pts):
+        while len(upper) > 1 and turn(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    return lower[:-1] + upper[:-1]
+
+
+def rounded_rect_points(y0, y1, z0, z1, r, n=24):
+    points = []
+    for cy, cz, start in [(y1 - r, z1 - r, 0), (y0 + r, z1 - r, 90), (y0 + r, z0 + r, 180), (y1 - r, z0 + r, 270)]:
+        points += [(cy + r * math.cos(math.radians(start + 90 * i / n)), cz + r * math.sin(math.radians(start + 90 * i / n))) for i in range(n + 1)]
+    return points
+
+
+def strap(c, outline):
+    # A stretched loop follows the convex hull of the closed case's cross-section.
     bt, bw = c["elastic_thickness"], c["elastic_width"]
+    hull = convex_hull([(round(y, 4), round(z, 4)) for y, z in outline])
 
-    def loop(a, b, rr):
-        sketch = cq.Workplane("YZ", origin=(x - bw / 2, 0, 0)).center(0, zc).sketch()
-        return sketch.rect(a, b).vertices().fillet(rr).finalize().extrude(bw)
+    def loop(offset):
+        return cq.Workplane("YZ", origin=(-bw / 2, 0, 0)).polyline(hull).close().offset2D(offset).extrude(bw)
 
-    solid = loop(span_y + 2 * bt, span_z + 2 * bt, r + bt).cut(loop(span_y, span_z, r))
-    centreline = 2 * (span_y + span_z) - (8 - 2 * math.pi) * r + math.pi * bt
+    solid = loop(bt + 0.05).cut(loop(0.05))
+    centreline = sum(math.dist(hull[i - 1], hull[i]) for i in range(len(hull))) + math.pi * (bt + 0.1)
     return shape(solid), centreline
 
 
@@ -162,36 +213,35 @@ def size_of(parts):
     return [round(bb.xlen, 1), round(bb.ylen, 1), round(bb.zlen, 1)]
 
 
-def pattern_svg(cut_w, cut_l, seam, half):
-    page_w, page_h = 210, 297
-    x0, y0 = (page_w - cut_w) / 2, (page_h - cut_l) / 2
-    x1, y1, fold = x0 + cut_w, y0 + cut_l, y0 + cut_l / 2
-    mid = page_w / 2
-    text = 'font-family="Helvetica, Arial, sans-serif" fill="#222"'
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{page_w}mm" height="{page_h}mm" viewBox="0 0 {page_w} {page_h}">
+def diagram_svg(size, seam):
+    width, length, middle = size["width"], size["length"], size["length"] / 2
+    m = 34
+    x0, y0, x1, y1 = m, m, m + width, m + length
+    xm, ym = x0 + width / 2, y0 + middle
+    page_w, page_h = width + 2 * m, length + 2 * m
+    font = 'font-family="Helvetica, Arial, sans-serif" text-anchor="middle" font-size="13"'
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {page_w} {page_h}" width="{2 * page_w}" height="{2 * page_h}">
   <rect width="{page_w}" height="{page_h}" fill="#fff"/>
-  <rect x="{x0:.2f}" y="{y0:.2f}" width="{cut_w}" height="{cut_l}" fill="none" stroke="#111" stroke-width="0.5"/>
-  <g stroke="#555" stroke-width="0.3" stroke-dasharray="3 2">
-    <line x1="{x0 + seam:.2f}" y1="{y0:.2f}" x2="{x0 + seam:.2f}" y2="{y1:.2f}"/>
-    <line x1="{x1 - seam:.2f}" y1="{y0:.2f}" x2="{x1 - seam:.2f}" y2="{y1:.2f}"/>
+  <rect x="{x0}" y="{y0}" width="{width}" height="{length}" fill="none" stroke="#111" stroke-width="1.4"/>
+  <g stroke="#555" stroke-width="1" stroke-dasharray="6 4">
+    <line x1="{x0 + seam}" y1="{y0}" x2="{x0 + seam}" y2="{y1}"/>
+    <line x1="{x1 - seam}" y1="{y0}" x2="{x1 - seam}" y2="{y1}"/>
   </g>
-  <line x1="{x0:.2f}" y1="{fold:.2f}" x2="{x1:.2f}" y2="{fold:.2f}" stroke="#111" stroke-width="0.35" stroke-dasharray="8 2 1 2"/>
-  <g {text} font-size="3.2" text-anchor="middle">
-    <text x="{mid}" y="{fold - 2:.2f}">FOLD · sewn to the other sleeve's fold, keycap side</text>
-    <text x="{mid}" y="{y0 + 7:.2f}">OPENING · top of the sleeve</text>
-    <text x="{mid}" y="{y1 - 4:.2f}">OPENING · underside of the sleeve</text>
-    <text x="{mid}" y="{y0 - 4:.2f}">{cut_w} mm</text>
-    <text transform="translate({x1 + 6:.2f} {fold:.2f}) rotate(90)">{cut_l} mm</text>
-    <text transform="translate({x0 + seam - 2:.2f} {y0 + cut_l / 4:.2f}) rotate(-90)">sew {seam:g} mm in</text>
-    <text transform="translate({x1 - seam + 4.5:.2f} {y0 + cut_l / 4:.2f}) rotate(-90)">sew {seam:g} mm in</text>
+  <line x1="{xm}" y1="{y0}" x2="{xm}" y2="{y1}" stroke="#111" stroke-width="1" stroke-dasharray="16 4 3 4"/>
+  <line x1="{x0}" y1="{ym}" x2="{x1}" y2="{ym}" stroke="#b3261e" stroke-width="2.4"/>
+  <g {font} fill="#222">
+    <text x="{xm}" y="{y0 - 12}">{width} mm</text>
+    <text transform="translate({x1 + 20} {y0 + length / 4}) rotate(90)">{length} mm</text>
+    <text x="{(x0 + xm) / 2}" y="{y0 + 24}">OPENING</text>
+    <text x="{(x0 + xm) / 2}" y="{y1 - 14}">OPENING</text>
+    <text transform="translate({xm - 7} {y0 + length / 4}) rotate(-90)">FOLD</text>
+    <text transform="translate({x0 + seam + 16} {y0 + length * 0.75}) rotate(-90)">SEAM {seam:g} MM IN</text>
+    <text transform="translate({x1 - seam - 9} {y0 + length * 0.75}) rotate(-90)">SEAM {seam:g} MM IN</text>
   </g>
-  <g {text} text-anchor="middle">
-    <text x="{mid}" y="{y0 + cut_l / 4 - 4:.2f}" font-size="5.5" font-weight="700">CORNE SLEEVE · CUT 2</text>
-    <text x="{mid}" y="{y0 + cut_l / 4 + 3:.2f}" font-size="3.2">3 mm neoprene fabric · one piece per keyboard half</text>
-    <text x="{mid}" y="{y0 + cut_l / 4 + 8:.2f}" font-size="3.2">Fits a {half}</text>
+  <g {font} fill="#b3261e">
+    <text x="{(xm + x1) / 2}" y="{ym - 9}">MIDDLE SEAM</text>
+    <text x="{(xm + x1) / 2}" y="{ym + 21}">{middle:g} mm from each end</text>
   </g>
-  <line x1="{x0:.2f}" y1="{y1 + 11:.2f}" x2="{x0 + 50:.2f}" y2="{y1 + 11:.2f}" stroke="#111" stroke-width="0.8"/>
-  <text x="{x0 + 53:.2f}" y="{y1 + 12.2:.2f}" font-size="3.2" {text}>This bar is 50 mm when printed at 100 %. A4, actual size.</text>
 </svg>
 """
 
@@ -205,89 +255,68 @@ def export_stl(obj, path, fine=True):
 def build(c):
     checks = []
     right, env = build_half(c, checks)
-    left = mirrored(right)
-    t, s = c["neoprene_thickness"], c["seam_allowance"]
-    L, D, H = env["length"], env["depth"], env["height"]
+    t, dt = c["neoprene_thickness"], c["divider_thickness"]
+    size = tube_size(c, env)
+    knob_10mm = tube_size(c, env, extra_height=env["keycap_top"] + 10 - env["height"])
 
-    seam_width = L + H + c["girth_allowance"]
-    seam_depth = D + H + c["mouth_overlap"] + c["depth_allowance"]
-    cut_w, cut_l = math.ceil(seam_width + 2 * s), math.ceil(2 * seam_depth)
-    checks.append({"name": "pattern fits A4 at actual size", "pass": cut_w <= 190 and cut_l <= 270,
-                   "detail": f"{cut_w} × {cut_l} mm inside a 190 × 270 mm printable area"})
+    solid, (X, Y, Z, r) = pocket(c, env)
+    hollow, _ = pocket(c, env, hollow=True)
+    open_mouth, _ = pocket(c, env, hollow=True, open_mouth=True)
+    top, web = 2 * Z + dt, size["hinge_web"]
 
-    closed, (X, Y, Z, r) = sleeve(c, env)
-    hollow, _ = sleeve(c, env, hollow=True)
-    open_sleeve, _ = sleeve(c, env, hollow=True, open_mouth=True)
-    dt = c["divider_thickness"]
-    top = 2 * Z + dt
-    turned = lambda obj: obj.rotate((0, 0, 0), (0, 0, 1), 180)
-    flipped = lambda obj: obj.rotate((0, 0, 0), (0, 1, 0), 180)
-    # The hinge runs along the closed ends (-Y) between the two keycap sides, so the book
-    # opens about that line and lays the top sleeve flat beside the bottom one.
-    unfold = lambda obj: obj.rotate((0, -Y / 2, Z + dt / 2), (1, -Y / 2, Z + dt / 2), 180)
-
-    def hinge(y, z):
-        return shape(cq.Workplane("YZ", origin=(-(X / 2 - CORNER_RADIUS - t), 0, 0)).center(y, z).circle(2.2).extrude(X - 2 * (CORNER_RADIUS + t)))
-
-    def book(lower, upper, is_open=False):
-        upper = flipped(upper).translate((0, 0, top))
+    # Open, the second pocket lies past the hinge, mirrored front to back. Closed, it sits
+    # upside down on the first, so the left half meets the right one key over key.
+    def case(lower, upper, is_open):
         if is_open:
-            return lower.fuse(hinge(-Y / 2, Z - 2)).fuse(unfold(upper))
-        return lower.fuse(hinge(-Y / 2 + 2.2, Z + dt / 2)).fuse(upper)
+            return lower.fuse(hinge_open(c, X, Y, Z, web)).fuse(upper.mirror("XZ").translate((0, -Y - web, 0)))
+        return lower.fuse(hinge_closed(c, X, Y, Z)).fuse(upper.mirror("XY").translate((0, 0, top)))
 
-    book_closed, book_open = book(closed, closed), book(closed, closed, is_open=True)
+    case_closed, case_open = case(solid, solid, False), case(solid, solid, True)
     divider = shape(cq.Workplane("XY").box(X - 8, Y - 8, dt, centered=(True, True, False)).edges("|Z").fillet(4).translate((0, 0, Z)))
-    strap, strap_line = band(c, 0, top / 2, Y, top, r)
+    radius = (Z + dt) / 2
+    outline = (rounded_rect_points(-Y / 2, Y / 2, 0, Z, r) + rounded_rect_points(-Y / 2, Y / 2, Z + dt, top, r)
+               + [(-Y / 2 + (radius + t) * math.cos(a), Z + dt / 2 + (radius + t) * math.sin(a)) for a in np.linspace(math.pi / 2, 3 * math.pi / 2, 49)])
+    band, band_line = strap(c, outline)
 
-    upper = flipped(closed).translate((0, 0, top))
-    clash = overlap(closed, upper) + overlap(closed, unfold(upper))
-    checks.append({"name": "book folds shut and opens flat", "pass": clash < 0.5,
-                   "detail": f"{clash:.2f} mm3 overlap between the sleeves, closed or open"})
-    clash = overlap(strap, compound([book_closed, divider]))
-    checks.append({"name": "strap sits on the closed book", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
-
-    # Right half keycaps up in the bottom sleeve; the left half lies keycaps down above it,
-    # key over key, with its feet against the top sleeve's outer layer.
     in_lower = placed(right, 0, (0, 0, t))
-    in_upper = {k: flipped(v).translate((0, 0, top - t)) for k, v in left.items()}
-    book_hollow = book(hollow, hollow)
-    clash = overlap(compound([*in_lower.values(), *in_upper.values()]), book_hollow)
-    checks.append({"name": "both halves fit inside their sleeves", "pass": clash < 0.5,
+    in_upper = {k: v.mirror("XY").translate((0, 0, top - t)) for k, v in right.items()}
+    case_hollow = case(hollow, hollow, False)
+    clash = overlap(compound([*in_lower.values(), *in_upper.values()]), case_hollow)
+    checks.append({"name": "both halves fit inside their pockets", "pass": clash < 0.5,
                    "detail": f"{clash:.2f} mm3 overlap with the 3 mm fabric; {CLEARANCE:g} mm play each side"})
-    # Turned so the open mouth faces the viewer's default camera.
-    slide = 0.55 * D
-    sliding_half = placed(right, 180, (0, -slide, t))
-    open_sleeve = turned(open_sleeve)
-    clash = overlap(compound(sliding_half.values()), open_sleeve)
+    clash = overlap(band, compound([case_closed, divider]))
+    checks.append({"name": "strap sits on the closed case", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
+
+    # Open view: the left half slides into the far pocket, whose mouth faces the default camera.
+    slide = 0.55 * env["depth"]
+    sliding_half = {k: v.mirror("XZ").translate((0, -Y - web - slide, t)) for k, v in right.items()}
+    case_loading = case(solid, open_mouth, True)
+    clash = overlap(compound(sliding_half.values()), case_loading)
     checks.append({"name": "half slides through the open mouth", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
 
-    loops = {"closed": [elastic_cut(c, strap_line)]}
+    loops = {"closed": [elastic_cut(c, band_line)]}
     checks.append({"name": "elastic within the 1 m from the guide", "pass": sum(loops["closed"]) <= 1000,
                    "detail": f"one loop of {loops['closed'][0]} mm"})
 
     modes = {
-        "closed": {"sleeves": [book_closed], "strap": [strap], "divider": [divider]},
-        "open": {"sleeves": [book_open]},
-        "sliding": {"sleeve": [open_sleeve], **{k: [v] for k, v in sliding_half.items()}},
+        "closed": {"sleeves": [case_closed], "strap": [band], "divider": [divider]},
+        "open": {"sleeves": [case_loading], **{k: [v] for k, v in sliding_half.items()}},
     }
     # Cut through both encoder knobs, the tallest part of each half, which meet face to face.
     cut_y = in_lower["knob"].Center().y
-    cutaway = {"sleeves": [book_hollow], "strap": [strap], "divider": [divider],
-               **{k: [in_lower[k], in_upper[k]] for k in right}}
+    cutaway = {"sleeves": [case_hollow], "strap": [band], "divider": [divider], **{k: [in_lower[k], in_upper[k]] for k in right}}
     modes["cutaway"] = {k: [o for o in (keep_behind(o, cut_y) for o in v) if o.Volume() > 0.01] for k, v in cutaway.items()}
     derived = {
-        "keyboard_half": {"length": round(L, 1), "depth": round(D, 1), "keycap_top_above_desk": env["keycap_top"],
-                          "knob_top_above_desk": env["knob_top"], "packed_height": H},
-        "sleeve": {"cut_width": cut_w, "cut_length": cut_l, "pieces": 2, "seam_line_width": round(seam_width, 1),
-                   "fold_to_opening": round(seam_depth, 1), "fold_from_end": cut_l / 2, "outside": [round(X, 1), round(Y, 1), round(Z, 1)]},
-        "hinge_length": round(X - 2 * (CORNER_RADIUS + t)),
-        "neoprene_needed": [2 * cut_w, cut_l],
-        "packed": {"closed": size_of([book_closed, strap, divider]), "open": size_of([book_open])},
+        "keyboard_half": {"length": round(env["length"], 1), "depth": round(env["depth"], 1), "keycap_top_above_desk": env["keycap_top"],
+                          "knob_top_above_desk": env["knob_top"], "packed_height": env["height"]},
+        "piece": {**size, "pieces": 1, "middle_seam_from_end": size["length"] / 2},
+        "piece_if_knob_10mm": [knob_10mm["width"], knob_10mm["length"]],
+        "pocket_outside": [round(X, 1), round(Y, 1), round(Z, 1)],
+        "packed": {"closed": size_of([case_closed, band, divider]), "open": size_of([case_open])},
         "elastic_loops": loops,
         "divider": [round(X - 8, 1), round(Y - 8, 1)],
-        "slide_out_shown": round(slide, 1),
     }
-    return modes, derived, checks, pattern_svg(cut_w, cut_l, s, f"{L:.1f} × {D:.1f} × {H:.1f} mm half")
+    return modes, derived, checks, diagram_svg(size, c["seam_allowance"])
 
 
 def export(c, out, public=None):
@@ -301,10 +330,10 @@ def export(c, out, public=None):
             checks.append({"name": f"{mode} {part} STL closed", "pass": ok, "detail": f"volume {volume:.0f} mm3"})
             if public is not None:
                 (public / path.name).write_bytes(path.read_bytes())
-    report = {"status": "Render and sewing pattern; keyboard inputs as listed, encoder knob height assumed",
+    report = {"status": "Render and cutting diagram; keyboard inputs as listed, encoder knob height assumed",
               "units": "mm", "config": c, "derived": derived, "checks": checks}
     for folder in targets:
-        (folder / f"{PREFIX}_pattern.svg").write_text(svg)
+        (folder / f"{PREFIX}_diagram.svg").write_text(svg)
         (folder / f"{PREFIX}_dimensions.json").write_text(json.dumps(report, indent=2) + "\n")
     failed = [check for check in checks if not check["pass"]]
     print(json.dumps({"output": str(out), "derived": derived, "checks_passed": len(checks) - len(failed), "failed": failed}, indent=2))
