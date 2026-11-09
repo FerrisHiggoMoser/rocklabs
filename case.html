@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A hand-sewn neoprene travel case for both Corne Choc Pro halves: one piece of fabric, two straight seams, folds shut like a book. 3D render, measurements and step-by-step instructions.">
+  <meta name="description" content="A hand-sewn neoprene travel case for both Corne Choc Pro halves: one piece of fabric, two main seams, a cable pocket, folds shut like a book. 3D render, measurements and step-by-step instructions.">
   <title>Corne neoprene travel case — rocklabs.rocks</title>
   <link rel="stylesheet" href="assets/dock.css">
   <link rel="stylesheet" href="assets/dual.css">
@@ -21,8 +21,8 @@
         <h1>Closes like<br>a book.</h1>
       </div>
       <div class="intro-copy">
-        <p>One piece of neoprene sewn into a tube, with one seam across the middle that splits it into two pockets. That seam is also the hinge: fold the case shut, keycaps facing in, and one loop of black 30 mm elastic holds it closed. Two straight seams, all by hand. Just the keyboard: no puck, no attachment.</p>
-        <span class="status"><i></i> Two straight seams · knob height assumed</span>
+        <p>One piece of neoprene sewn into a tube, with one seam across the middle that splits it into two pockets. That seam is also the hinge: fold the case shut, keycaps facing in, and one loop of black 30 mm elastic holds it closed. A small pocket on the back holds the cables. Two main seams, all by hand. Just the keyboard: no puck, no attachment.</p>
+        <span class="status"><i></i> Two main seams · knob height assumed</span>
       </div>
     </section>
 
@@ -40,16 +40,16 @@
         <p id="load-status" role="status">Loading the actual STL files…</p>
       </div>
       <div class="viewer-caption">
-        <p id="view-caption">Folded shut at the middle seam, which rolls round the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is 144 × 125 × 64 mm.</p>
+        <p id="view-caption">Folded shut at the middle seam, which rolls round the spine. The cable pocket sits on top under the strap, and the strap also holds both openings shut on the far side. Closed it is 144 × 125 × 72 mm.</p>
         <a id="open-viewer" href="viewer.html?model=models/corne_case_closed_sleeves.stl">Open viewer ↗</a>
       </div>
     </section>
 
     <section class="spec-strip" aria-label="Case measurements">
       <div><span>ONE HALF</span><strong><b data-fill="derived.keyboard_half.length">136.4</b> × <b data-fill="derived.keyboard_half.depth">95.6</b> <small>mm</small></strong><p><b data-fill="derived.keyboard_half.packed_height">23</b> mm tall at the encoder knob</p></div>
-      <div><span>NEOPRENE</span><strong><b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> <small>mm</small></strong><p>One piece · two straight seams</p></div>
-      <div><span>STRAP, 30 MM ELASTIC</span><strong><b data-fill="derived.elastic_loops.closed.0">307</b> <small>mm</small></strong><p>One loop, holds it shut</p></div>
-      <div><span>CLOSED</span><strong><b data-fill="derived.packed.closed">144 × 125 × 64</b> <small>mm</small></strong><p>Open flat · <b data-fill="derived.packed.open">144 × 256 × 30</b> mm</p></div>
+      <div><span>NEOPRENE</span><strong><b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> <small>mm</small></strong><p>One piece, plus a cable pocket</p></div>
+      <div><span>STRAP, 30 MM ELASTIC</span><strong><b data-fill="derived.elastic_loops.closed.0">313</b> <small>mm</small></strong><p>One loop, holds it shut</p></div>
+      <div><span>CLOSED</span><strong><b data-fill="derived.packed.closed">144 × 125 × 72</b> <small>mm</small></strong><p>Open flat · <b data-fill="derived.packed.open">144 × 256 × 38</b> mm</p></div>
     </section>
 
     <section class="measure-grid">
@@ -72,7 +72,8 @@
           <tr><th>Neoprene, 3 mm, fabric both sides</th><td>1 piece, <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm<small>The whole case</small></td></tr>
           <tr><th>Long seam</th><td><b data-fill="config.seam_allowance">10</b> mm in<small>Joins the two <b data-fill="derived.piece.length">300</b> mm sides into a tube</small></td></tr>
           <tr><th>Middle seam</th><td><b data-fill="derived.piece.middle_seam_from_end">150</b> mm from either end<small>Splits the tube into two pockets and is the hinge</small></td></tr>
-          <tr><th>Strap, 30 mm black elastic</th><td>1 loop, <b data-fill="derived.elastic_loops.closed.0">307</b> mm<small>Includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut</small></td></tr>
+          <tr><th>Cable pocket</th><td><b data-fill="derived.cable_pocket.size">120 × 85</b> mm patch<small>From the leftover neoprene, sewn on along three sides <b data-fill="derived.cable_pocket.seam">5</b> mm in, before the tube is closed</small></td></tr>
+          <tr><th>Strap, 30 mm black elastic</th><td>1 loop, <b data-fill="derived.elastic_loops.closed.0">313</b> mm<small>Includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut. A few stitches hold it to the spine.</small></td></tr>
           <tr><th>Divider</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>Thin stiff plastic or card between the halves, so the keycaps and knobs never press into each other</small></td></tr>
         </table>
       </article>
@@ -81,13 +82,13 @@
     <section class="make" id="make" aria-labelledby="make-heading">
       <div class="make-side">
         <p class="eyebrow">03 / HOW TO MAKE IT</p>
-        <h2 id="make-heading">Two seams, by hand.</h2>
-        <a class="diagram" href="models/corne_case_diagram.svg"><img src="models/corne_case_diagram.svg" alt="Cutting diagram: one 349 by 300 mm rectangle. Fold it so the two 300 mm sides meet and sew them 10 mm in to make a tube, then sew straight across the middle, 150 mm from each end." width="417" height="368"></a>
+        <h2 id="make-heading">Two main seams, by hand.</h2>
+        <a class="diagram" href="models/corne_case_diagram.svg"><img src="models/corne_case_diagram.svg" alt="Cutting diagram: one 349 by 300 mm rectangle. A 120 by 85 mm cable pocket patch sits 22 mm from the fold line and 19 mm from one end. Fold it so the two 300 mm sides meet and sew them 10 mm in to make a tube, then sew straight across the middle, 150 mm from each end." width="417" height="368"></a>
         <h3>You need</h3>
         <ul class="needs">
           <li>3 mm neoprene fabric with fabric on both sides, at least <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm</li>
-          <li>Strong polyester thread and a medium or heavy hand-sewing needle</li>
-          <li>8–12 sewing clips and a thimble</li>
+          <li>Strong thread and thick, sharp hand-sewing needles; a cheap leather sewing kit has both, plus a thimble and an awl for poking the holes first</li>
+          <li>8–12 sewing clips or clothes pegs</li>
           <li>30 mm black elastic, about 35 cm</li>
           <li>Ruler or tape measure, tailor's chalk and fabric scissors</li>
           <li>A <b data-fill="derived.divider">136 × 96</b> mm piece of thin stiff plastic or card for the divider</li>
@@ -98,16 +99,18 @@
         <p class="stitch">Every seam is a backstitch. Knot the thread, bring the needle up through the fabric, then push it back down about 5 mm behind where it came out. Bring it up again 5 mm in front of the thread and repeat. Each stitch meets the last one, so the line is solid. Knot it again at the end.</p>
         <h3>Steps</h3>
         <ol class="steps">
-          <li>Mark a <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm rectangle on the neoprene with chalk and cut it out.</li>
-          <li>Fold it in half so the two <b data-fill="derived.piece.length">300</b> mm sides meet, outside faces together. Clip them every 5 cm.</li>
+          <li>Mark a <b data-fill="derived.piece.width">349</b> × <b data-fill="derived.piece.length">300</b> mm rectangle on the neoprene with chalk and cut it out. From the leftover, cut a <b data-fill="derived.cable_pocket.size">120 × 85</b> mm patch for the cable pocket.</li>
+          <li>Lay the patch on the outside face of the big piece, <b data-fill="derived.cable_pocket.from_fold">22</b> mm from the fold line and <b data-fill="derived.cable_pocket.from_end">19</b> mm from one short end, as in the diagram. Backstitch it on along both sides and the edge nearest the middle, <b data-fill="derived.cable_pocket.seam">5</b> mm in. Leave the edge nearest the end open.</li>
+          <li>Fold the big piece in half so the two <b data-fill="derived.piece.length">300</b> mm sides meet, outside faces together, so the patch ends up inside. Clip them every 5 cm.</li>
           <li>Backstitch those two sides together, <b data-fill="config.seam_allowance">10</b> mm in from the edge. You now have a tube, open at both ends.</li>
           <li>Turn the tube right side out, like a sock, and flatten it with the seam along one side.</li>
-          <li>Slide a half in from each end, keycaps up, to check the fit. Then take them out again.</li>
+          <li>Slide a half in from each end, keycaps up and the cable pocket underneath, to check the fit. Then take them out again.</li>
           <li>Measure <b data-fill="derived.piece.middle_seam_from_end">150</b> mm from one end and chalk a line straight across. Backstitch along it through both layers. That one seam makes the two pockets and is the hinge.</li>
-          <li>For the strap, cut <b data-fill="derived.elastic_loops.closed.0">307</b> mm of elastic, overlap the ends by <b data-fill="config.elastic_join_overlap">20</b> mm and sew a small square through both layers to make a loop.</li>
-          <li>To pack, slide a half into each pocket, keycaps up. Lay the divider on one half, fold the case at the middle seam so the keycaps face each other, and slip the strap over it. The strap also holds both openings shut.</li>
+          <li>For the strap, cut <b data-fill="derived.elastic_loops.closed.0">313</b> mm of elastic, overlap the ends by <b data-fill="config.elastic_join_overlap">20</b> mm and sew a small square through both layers to make a loop.</li>
+          <li>To pack, unplug the cables, coil them and push them into the cable pocket. Slide a half into each pocket, keycaps up and the cable pocket underneath. Lay the divider on one half, fold the case at the middle seam so the keycaps face each other, and slip the strap over it. The strap also holds both openings and the cable pocket shut.</li>
+          <li>The first time it's packed, put 4–5 stitches through the strap and the middle seam where they cross, so the strap stays on the case. To open it, roll the strap off the top half; it stays attached at the spine.</li>
         </ol>
-        <p class="make-note">Unplug the cables first, and don't pack it damp. It protects against bumps and rubbing in a bag, not crushing.</p>
+        <p class="make-note">Don't pack it damp. It protects against bumps and rubbing in a bag, not crushing.</p>
       </div>
     </section>
 

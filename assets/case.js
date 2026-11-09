@@ -18,11 +18,11 @@ let report = null;
 
 // Fallback numbers match the published report; they are replaced once it loads.
 function captionFor(mode) {
-  const packed = report ? report.derived.packed : { closed: [144, 125, 64], open: [144, 256, 30] };
+  const packed = report ? report.derived.packed : { closed: [144, 125, 72], open: [144, 256, 38] };
   const size = values => values.map(Math.round).join(' × ');
   return {
-    closed: `Folded shut at the middle seam, which rolls round the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is ${size(packed.closed)} mm.`,
-    open: `Open flat, it is one tube with the middle seam across it: two pockets, openings at both ends. Here the left half slides into its pocket. ${size(packed.open)} mm.`,
+    closed: `Folded shut at the middle seam, which rolls round the spine. The cable pocket sits on top under the strap, and the strap also holds both openings shut on the far side. Closed it is ${size(packed.closed)} mm.`,
+    open: `Open flat, it is one tube with the middle seam across it: two pockets, openings at both ends, and the cable pocket underneath. Here the left half slides into its pocket. ${size(packed.open)} mm.`,
     cutaway: 'Closed and cut through both encoder knobs. The halves meet key over key and knob over knob, with 3 mm of fabric each and the divider between them.',
   }[mode];
 }

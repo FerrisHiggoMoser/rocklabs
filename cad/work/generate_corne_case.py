@@ -166,6 +166,24 @@ def hinge_closed(c, X, Y, Z):
     return half.cut(cq.Solid.makeBox(X - 10, 1.2, 1.2, cq.Vector(-X / 2 + 5, -Y / 2 - radius - t - 0.6, zc - 0.6)))
 
 
+def cable_pocket(c):
+    w, d, t = c["cable_pocket_width"], c["cable_pocket_height"], c["neoprene_thickness"]
+    seam, rise = c["cable_pocket_seam"], t + c["cable_pocket_room"]
+    outer = cq.Workplane("XY").box(w, d, rise, centered=(True, True, False)).edges("|Z").fillet(8).edges(">Z").fillet(2.5)
+    # Open along the +Y edge; the other three edges are where it is sewn on.
+    room = cq.Workplane("XY").box(w - 2 * seam, d - seam + 1, rise - t, centered=(True, True, False)).translate((0, (seam + 1) / 2, 0))
+    return shape(outer.cut(room)), rise
+
+
+def cable_pocket_position(c, size, Y, Z, r):
+    # Along the fabric from the middle seam, round the pocket's end, to the middle of its back.
+    to_back = size["hinge_web"] / 2 + (Z / 2 - r) + math.pi * r / 2 + (Y / 2 - r)
+    fold = size["width"] / 2
+    x_centre = (fold + size["width"] - c["seam_allowance"]) / 2
+    return {"from_fold": round(x_centre - c["cable_pocket_width"] / 2 - fold),
+            "from_end": round(size["length"] / 2 - to_back - c["cable_pocket_height"] / 2)}
+
+
 def convex_hull(points):
     pts = sorted(set(points))
 
@@ -213,11 +231,13 @@ def size_of(parts):
     return [round(bb.xlen, 1), round(bb.ylen, 1), round(bb.zlen, 1)]
 
 
-def diagram_svg(size, seam):
+def diagram_svg(size, seam, patch):
     width, length, middle = size["width"], size["length"], size["length"] / 2
     m = 34
     x0, y0, x1, y1 = m, m, m + width, m + length
     xm, ym = x0 + width / 2, y0 + middle
+    pw, ph = patch["size"]
+    px, py = xm + patch["from_fold"], y0 + patch["from_end"]
     page_w, page_h = width + 2 * m, length + 2 * m
     font = 'font-family="Helvetica, Arial, sans-serif" text-anchor="middle" font-size="13"'
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {page_w} {page_h}" width="{2 * page_w}" height="{2 * page_h}">
@@ -229,6 +249,8 @@ def diagram_svg(size, seam):
   </g>
   <line x1="{xm}" y1="{y0}" x2="{xm}" y2="{y1}" stroke="#111" stroke-width="1" stroke-dasharray="16 4 3 4"/>
   <line x1="{x0}" y1="{ym}" x2="{x1}" y2="{ym}" stroke="#b3261e" stroke-width="2.4"/>
+  <polyline points="{px},{py} {px},{py + ph} {px + pw},{py + ph} {px + pw},{py}" fill="none" stroke="#2f6b3f" stroke-width="1.6"/>
+  <line x1="{px}" y1="{py}" x2="{px + pw}" y2="{py}" stroke="#2f6b3f" stroke-width="1.6" stroke-dasharray="5 4"/>
   <g {font} fill="#222">
     <text x="{xm}" y="{y0 - 12}">{width} mm</text>
     <text transform="translate({x1 + 20} {y0 + length / 4}) rotate(90)">{length} mm</text>
@@ -237,6 +259,11 @@ def diagram_svg(size, seam):
     <text transform="translate({xm - 7} {y0 + length / 4}) rotate(-90)">FOLD</text>
     <text transform="translate({x0 + seam + 16} {y0 + length * 0.75}) rotate(-90)">SEAM {seam:g} MM IN</text>
     <text transform="translate({x1 - seam - 9} {y0 + length * 0.75}) rotate(-90)">SEAM {seam:g} MM IN</text>
+  </g>
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle" font-size="11" fill="#2f6b3f">
+    <text x="{px + pw / 2}" y="{py + ph / 2 - 8}" font-size="12">CABLE POCKET</text>
+    <text x="{px + pw / 2}" y="{py + ph / 2 + 8}">{pw:g} × {ph:g} mm patch</text>
+    <text x="{px + pw / 2}" y="{py + ph / 2 + 22}">open edge at the top</text>
   </g>
   <g {font} fill="#b3261e">
     <text x="{(xm + x1) / 2}" y="{ym - 9}">MIDDLE SEAM</text>
@@ -266,15 +293,21 @@ def build(c):
 
     # Open, the second pocket lies past the hinge, mirrored front to back. Closed, it sits
     # upside down on the first, so the left half meets the right one key over key.
+    patch, rise = cable_pocket(c)
+
     def case(lower, upper, is_open):
         if is_open:
-            return lower.fuse(hinge_open(c, X, Y, Z, web)).fuse(upper.mirror("XZ").translate((0, -Y - web, 0)))
-        return lower.fuse(hinge_closed(c, X, Y, Z)).fuse(upper.mirror("XY").translate((0, 0, top)))
+            far = (0, -Y - web, 0)
+            return (lower.fuse(hinge_open(c, X, Y, Z, web)).fuse(upper.mirror("XZ").translate(far))
+                    .fuse(patch.mirror("XY").mirror("XZ").translate(far)))
+        return (lower.fuse(hinge_closed(c, X, Y, Z)).fuse(upper.mirror("XY").translate((0, 0, top)))
+                .fuse(patch.translate((0, 0, top))))
 
     case_closed, case_open = case(solid, solid, False), case(solid, solid, True)
     divider = shape(cq.Workplane("XY").box(X - 8, Y - 8, dt, centered=(True, True, False)).edges("|Z").fillet(4).translate((0, 0, Z)))
     radius = (Z + dt) / 2
     outline = (rounded_rect_points(-Y / 2, Y / 2, 0, Z, r) + rounded_rect_points(-Y / 2, Y / 2, Z + dt, top, r)
+               + rounded_rect_points(-c["cable_pocket_height"] / 2, c["cable_pocket_height"] / 2, top, top + rise, 2.5)
                + [(-Y / 2 + (radius + t) * math.cos(a), Z + dt / 2 + (radius + t) * math.sin(a)) for a in np.linspace(math.pi / 2, 3 * math.pi / 2, 49)])
     band, band_line = strap(c, outline)
 
@@ -311,12 +344,14 @@ def build(c):
                           "knob_top_above_desk": env["knob_top"], "packed_height": env["height"]},
         "piece": {**size, "pieces": 1, "middle_seam_from_end": size["length"] / 2},
         "piece_if_knob_10mm": [knob_10mm["width"], knob_10mm["length"]],
+        "cable_pocket": {"size": [c["cable_pocket_width"], c["cable_pocket_height"]], "seam": c["cable_pocket_seam"],
+                         **cable_pocket_position(c, size, Y, Z, r)},
         "pocket_outside": [round(X, 1), round(Y, 1), round(Z, 1)],
         "packed": {"closed": size_of([case_closed, band, divider]), "open": size_of([case_open])},
         "elastic_loops": loops,
         "divider": [round(X - 8, 1), round(Y - 8, 1)],
     }
-    return modes, derived, checks, diagram_svg(size, c["seam_allowance"])
+    return modes, derived, checks, diagram_svg(size, c["seam_allowance"], derived["cable_pocket"])
 
 
 def export(c, out, public=None):

@@ -21,12 +21,17 @@
     "elastic_stretch": 0.85,
     "elastic_join_overlap": 20.0,
     "divider_thickness": 1.5,
+    "cable_pocket_width": 120.0,
+    "cable_pocket_height": 85.0,
+    "cable_pocket_seam": 5.0,
+    "cable_pocket_room": 5.0,
     "notes": {
       "keyboard": "Same keyboard inputs as the Corne dock: the 8.2 mm case/plate profile is from Keebart's product image; the 16 mm keycap height and 2 mm feet are earlier rocklabs assumptions. The half outline is the upstream foostan Corne v4 3x6 case, not a Keebart drawing.",
       "encoder": "Knob size and height are not known. 5 mm above the keycaps is an assumption; measure yours and rebuild if it sits higher.",
       "tube": "One rectangle sewn into a tube along its two long sides, then one seam across the middle makes the two pockets. Girth allowance covers the 3 mm fabric wrapping round each half, so the pockets are snug. The openings need no hem because neoprene does not fray.",
       "hinge": "The middle seam is the hinge. Closed, the stretch of tube between the halves wraps the spine as a half circle, so each pocket gets half of that as extra depth.",
-      "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed case's girth plus a 20 mm overlap for sewing it shut."
+      "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed case's girth plus a 20 mm overlap for sewing it shut. A few stitches through the strap and the middle seam keep it on the case.",
+      "cable_pocket": "A patch from the leftover neoprene, sewn on three sides to the outside of one pocket's back before the tube is closed, open towards that pocket's end. Closed, it sits under the strap. The room value only shapes the render."
     }
   },
   "derived": {
@@ -50,6 +55,15 @@
       359,
       318
     ],
+    "cable_pocket": {
+      "size": [
+        120.0,
+        85.0
+      ],
+      "seam": 5.0,
+      "from_fold": 22,
+      "from_end": 19
+    },
     "pocket_outside": [
       144.4,
       103.6,
@@ -59,17 +73,17 @@
       "closed": [
         144.4,
         125.2,
-        63.6
+        71.6
       ],
       "open": [
         144.4,
         255.9,
-        29.5
+        37.5
       ]
     },
     "elastic_loops": {
       "closed": [
-        307
+        313
       ]
     },
     "divider": [
@@ -106,17 +120,17 @@
     {
       "name": "elastic within the 1 m from the guide",
       "pass": true,
-      "detail": "one loop of 307 mm"
+      "detail": "one loop of 313 mm"
     },
     {
       "name": "closed sleeves STL closed",
       "pass": true,
-      "detail": "volume 902950 mm3"
+      "detail": "volume 939586 mm3"
     },
     {
       "name": "closed strap STL closed",
       "pass": true,
-      "detail": "volume 15160 mm3"
+      "detail": "volume 15492 mm3"
     },
     {
       "name": "closed divider STL closed",
@@ -126,7 +140,7 @@
     {
       "name": "open sleeves STL closed",
       "pass": true,
-      "detail": "volume 578637 mm3"
+      "detail": "volume 615273 mm3"
     },
     {
       "name": "open case STL closed",
@@ -156,12 +170,12 @@
     {
       "name": "cutaway sleeves STL closed",
       "pass": true,
-      "detail": "volume 71933 mm3"
+      "detail": "volume 79716 mm3"
     },
     {
       "name": "cutaway strap STL closed",
       "pass": true,
-      "detail": "volume 5242 mm3"
+      "detail": "volume 5408 mm3"
     },
     {
       "name": "cutaway divider STL closed",
