@@ -4,28 +4,28 @@ const caption = document.getElementById('view-caption');
 const openViewer = document.getElementById('open-viewer');
 const buttons = [...document.querySelectorAll('[data-mode]')];
 const colors = {
-  sleeves: '3a3d41', sleeve: '3a3d41', bands: '151617', divider: 'd8ccb0',
+  sleeves: '3a3d41', sleeve: '3a3d41', strap: '151617', divider: 'd8ccb0',
   case: 'cfd2cb', keycaps: 'f0efe9', switches: '2a2b2d', knob: '8f9396', feet: '333333',
 };
 const keyboard = ['case', 'keycaps', 'switches', 'knob', 'feet'];
 const files = {
-  side: ['sleeves', 'bands'],
-  stacked: ['sleeves', 'bands', 'divider'],
+  closed: ['sleeves', 'strap', 'divider'],
+  open: ['sleeves'],
   sliding: ['sleeve', ...keyboard],
-  cutaway: ['sleeves', 'bands', ...keyboard],
+  cutaway: ['sleeves', 'strap', 'divider', ...keyboard],
 };
-const labels = { side: 'side by side', stacked: 'stacked', sliding: 'sliding in', cutaway: 'cutaway' };
+const labels = { closed: 'closed', open: 'open', sliding: 'sliding in', cutaway: 'cutaway' };
 let report = null;
 
 // Fallback numbers match the published report; they are replaced once it loads.
 function captionFor(mode) {
-  const packed = report ? report.derived.packed : { side_by_side: [144, 211, 33], stacked: [144, 107, 64] };
+  const packed = report ? report.derived.packed : { closed: [144, 107, 64], open: [144, 207, 30] };
   const size = values => values.map(Math.round).join(' × ');
   return {
-    side: `Long edges together, openings facing out. Two elastic loops run across both sleeves and hold both openings shut. Packed it is ${size(packed.side_by_side)} mm, about the size of an A5 notebook.`,
-    stacked: `One sleeve on the other with a thin, stiff divider between them, so the keycaps never press into each other. Packed it is ${size(packed.stacked)} mm.`,
+    closed: `Folded shut with the hinge seam along the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is ${size(packed.closed)} mm.`,
+    open: `Open flat, the two sleeves lie side by side, joined along their closed ends by the hinge seam. The openings face outward. ${size(packed.open)} mm.`,
     sliding: 'Each half slides into its own sleeve through the opening. The fit is snug; the neoprene stretches enough to get it in.',
-    cutaway: 'Cut through the front sleeve at the encoder knob, the tallest part of the half. 3 mm of fabric all round and 1 mm of play at the sides.',
+    cutaway: 'Closed and cut through both encoder knobs. The halves meet key over key and knob over knob, with 3 mm of fabric each and the divider between them.',
   }[mode];
 }
 
@@ -48,7 +48,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
   openViewer.href = viewerURL(mode, false);
   frame.src = viewerURL(mode);
 }));
-openViewer.href = viewerURL('side', false);
+openViewer.href = viewerURL('closed', false);
 
 window.addEventListener('message', event => {
   if (event.origin !== location.origin || event.source !== frame.contentWindow || event.data?.source !== 'rocklabs-viewer') return;
@@ -72,7 +72,7 @@ fetch('models/corne_case_dimensions.json')
     caption.textContent = captionFor(currentMode());
     const passed = report.checks.filter(check => check.pass).length;
     const validation = document.getElementById('validation');
-    validation.textContent = `${passed} of ${report.checks.length} CAD and mesh checks pass, including both halves fitting inside their sleeves, every key inside the case outline, and the elastic staying within 1 m.`;
+    validation.textContent = `${passed} of ${report.checks.length} CAD and mesh checks pass, including both halves fitting inside their sleeves, the book folding shut and opening flat, and every key inside the case outline.`;
     if (passed !== report.checks.length) validation.textContent += ' Check the failed items in the report before cutting.';
   })
   .catch(() => {});

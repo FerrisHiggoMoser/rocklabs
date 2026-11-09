@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A sewn neoprene travel case for both Corne Choc Pro halves: 3D render, keyboard measurements, cut sizes and a 1:1 A4 pattern.">
+  <meta name="description" content="A sewn neoprene travel case for both Corne Choc Pro halves that folds shut like a book: 3D render, keyboard measurements, cut sizes and a 1:1 A4 pattern.">
   <title>Corne neoprene travel case — rocklabs.rocks</title>
   <link rel="stylesheet" href="assets/dock.css">
   <link rel="stylesheet" href="assets/dual.css">
@@ -18,10 +18,10 @@
     <section class="intro">
       <div>
         <p class="eyebrow">CORNE CHOC PRO / NEOPRENE TRAVEL CASE</p>
-        <h1>Pack both<br>halves.</h1>
+        <h1>Closes like<br>a book.</h1>
       </div>
       <div class="intro-copy">
-        <p>Two neoprene sleeves, one per half, held together by two loops of black 30 mm elastic. Sized from the keyboard measurements already on this site, with keycaps, feet and the encoder knob included. Just the keyboard: no puck, no attachment.</p>
+        <p>Two neoprene sleeves, one per half, sewn together along their closed ends. Open, they lie flat side by side. Fold one over the other, keycaps facing in, and one loop of black 30 mm elastic holds it shut. Sized from the keyboard measurements already on this site. Just the keyboard: no puck, no attachment.</p>
         <span class="status"><i></i> Sewing pattern · knob height assumed</span>
       </div>
     </section>
@@ -29,28 +29,28 @@
     <section class="viewer-card" aria-label="Interactive case preview">
       <div class="viewer-toolbar">
         <div class="tabs" role="group" aria-label="Choose model view">
-          <button type="button" data-mode="side" aria-pressed="true">Side by side</button>
-          <button type="button" data-mode="stacked" aria-pressed="false">Stacked</button>
+          <button type="button" data-mode="closed" aria-pressed="true">Closed</button>
+          <button type="button" data-mode="open" aria-pressed="false">Open</button>
           <button type="button" data-mode="sliding" aria-pressed="false">Sliding in</button>
           <button type="button" data-mode="cutaway" aria-pressed="false">Cutaway</button>
         </div>
         <span class="viewer-help">Drag to rotate · scroll to zoom</span>
       </div>
       <div class="viewport">
-        <iframe id="model-view" title="3D preview of the Corne neoprene travel case" src="viewer.html?embed=1&amp;label=Corne%20neoprene%20case%20%E2%80%94%20side%20by%20side&amp;model=models%2Fcorne_case_side_sleeves.stl%7C3a3d41&amp;model=models%2Fcorne_case_side_bands.stl%7C151617" allow="fullscreen"></iframe>
+        <iframe id="model-view" title="3D preview of the Corne neoprene travel case" src="viewer.html?embed=1&amp;label=Corne%20neoprene%20case%20%E2%80%94%20closed&amp;model=models%2Fcorne_case_closed_sleeves.stl%7C3a3d41&amp;model=models%2Fcorne_case_closed_strap.stl%7C151617&amp;model=models%2Fcorne_case_closed_divider.stl%7Cd8ccb0" allow="fullscreen"></iframe>
         <p id="load-status" role="status">Loading the actual STL files…</p>
       </div>
       <div class="viewer-caption">
-        <p id="view-caption">Long edges together, openings facing out. Two elastic loops run across both sleeves and hold both openings shut. Packed it is 144 × 211 × 33 mm, about the size of an A5 notebook.</p>
-        <a id="open-viewer" href="viewer.html?model=models/corne_case_side_sleeves.stl">Open viewer ↗</a>
+        <p id="view-caption">Folded shut with the hinge seam along the spine. The strap goes over the top, round both ends and underneath, so it also holds both openings shut on the far side. Closed it is 144 × 107 × 64 mm.</p>
+        <a id="open-viewer" href="viewer.html?model=models/corne_case_closed_sleeves.stl">Open viewer ↗</a>
       </div>
     </section>
 
     <section class="spec-strip" aria-label="Case measurements">
       <div><span>ONE HALF</span><strong><b data-fill="derived.keyboard_half.length">136.4</b> × <b data-fill="derived.keyboard_half.depth">95.6</b> <small>mm</small></strong><p><b data-fill="derived.keyboard_half.packed_height">23</b> mm tall at the encoder knob</p></div>
       <div><span>NEOPRENE PER SLEEVE</span><strong><b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> <small>mm</small></strong><p>3 mm fabric · cut 2</p></div>
-      <div><span>ELASTIC, 30 MM</span><strong>2 × <b data-fill="derived.elastic_loops.side_by_side.0">419</b> <small>mm</small></strong><p>Side by side · 2 × <b data-fill="derived.elastic_loops.stacked.0">295</b> mm stacked</p></div>
-      <div><span>PACKED</span><strong><b data-fill="derived.packed.side_by_side">144 × 211 × 33</b> <small>mm</small></strong><p>Side by side · <b data-fill="derived.packed.stacked">144 × 107 × 64</b> mm stacked</p></div>
+      <div><span>STRAP, 30 MM ELASTIC</span><strong><b data-fill="derived.elastic_loops.closed.0">295</b> <small>mm</small></strong><p>One loop, holds it shut</p></div>
+      <div><span>CLOSED</span><strong><b data-fill="derived.packed.closed">144 × 107 × 64</b> <small>mm</small></strong><p>Open flat · <b data-fill="derived.packed.open">144 × 207 × 30</b> mm</p></div>
     </section>
 
     <section class="measure-grid">
@@ -73,8 +73,9 @@
           <tr><th>Neoprene, 3 mm, fabric both sides</th><td>2 × <b data-fill="derived.sleeve.cut_width">185</b> × <b data-fill="derived.sleeve.cut_length">252</b> mm<small>One <b data-fill="derived.neoprene_needed">370 × 252</b> mm piece covers both</small></td></tr>
           <tr><th>Fold line</th><td><b data-fill="derived.sleeve.fold_from_end">126</b> mm from either short end</td></tr>
           <tr><th>Seam allowance</th><td><b data-fill="config.seam_allowance">10</b> mm, both long sides</td></tr>
-          <tr><th>Elastic, 30 mm, black</th><td>2 loops × <b data-fill="derived.elastic_loops.side_by_side.0">419</b> mm side by side<small>Or 2 × <b data-fill="derived.elastic_loops.stacked.0">295</b> mm stacked. Each includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut.</small></td></tr>
-          <tr><th>Divider, stacked only</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>1–1.5 mm stiff plastic or card</small></td></tr>
+          <tr><th>Hinge seam</th><td><b data-fill="derived.hinge_length">120</b> mm along the folded ends<small>Sewn on the keycap side, so the halves fold in face to face</small></td></tr>
+          <tr><th>Strap, 30 mm black elastic</th><td>1 loop × <b data-fill="derived.elastic_loops.closed.0">295</b> mm<small>Includes <b data-fill="config.elastic_join_overlap">20</b> mm of overlap to sew it shut</small></td></tr>
+          <tr><th>Divider</th><td><b data-fill="derived.divider">136 × 96</b> mm<small>1–1.5 mm stiff plastic or card between the halves, so the keycaps and knobs never press into each other</small></td></tr>
         </table>
       </article>
     </section>
@@ -88,7 +89,8 @@
           <li>Print the pattern on A4 at 100 % and check that the bar measures 50 mm. Trace it onto the neoprene twice and cut.</li>
           <li>Fold each piece at the fold line, outside faces together, and hold the sides with sewing clips.</li>
           <li>Sew both long sides 10 mm in. Leave the short ends open: together they are the opening. Neoprene does not fray, so they need no hem.</li>
-          <li>Turn each sleeve right side out and slide a half in. Sew each elastic loop shut with its overlap and slip both loops over the packed sleeves.</li>
+          <li>Turn both sleeves right side out. Lay them keycap side up with their folded ends touching and sew those two folds together along the top. That seam is the hinge.</li>
+          <li>Slide a half into each sleeve, keycaps up, and fold the case shut with the divider in between. Sew the elastic into a loop with its overlap and slip it round the closed case.</li>
         </ol>
         <p class="pattern-links"><a href="models/corne_case_pattern.svg" download>Pattern, A4 SVG ↓</a></p>
       </div>

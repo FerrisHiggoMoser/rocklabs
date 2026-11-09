@@ -22,6 +22,7 @@
     "keyboard": "Same keyboard inputs as the Corne dock: the 8.2 mm case/plate profile is from Keebart's product image; the 16 mm keycap height and 2 mm feet are earlier rocklabs assumptions. The half outline is the upstream foostan Corne v4 3x6 case, not a Keebart drawing.",
     "encoder": "Knob size and height are not known. 5 mm above the keycaps is an assumption; measure yours and rebuild if it sits higher.",
     "sleeve": "One rectangle per half, folded at the far end and sewn up both sides. Girth allowance covers the 3 mm fabric wrapping round the half, so the sleeve is snug. The mouth needs no hem because neoprene does not fray.",
-    "elastic": "Each band is a closed loop of 30 mm elastic, cut at 85 % of the packed girth plus a 20 mm overlap for sewing it shut. The guide's 1 m is enough for either arrangement."
+    "hinge": "The two sleeves are sewn together along their folded ends on the keycap side, so the case opens flat and folds shut like a book with the halves face to face.",
+    "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed book's girth plus a 20 mm overlap for sewing it shut."
   }
 }

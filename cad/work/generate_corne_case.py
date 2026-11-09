@@ -1,9 +1,10 @@
 """Neoprene travel case for the two Corne Choc Pro halves. Units: mm.
 
-Sizes two sewn sleeves and their elastic bands from ../corne_case.json and
-exports the website render, a 1:1 A4 cut pattern and a dimension report.
-Keyboard only: no puck or attachment. The keyboard model is for the render
-and the fit checks, not a Keebart drawing.
+Sizes two sewn sleeves, hinged along their closed ends like a book, and the
+elastic strap that holds it shut from ../corne_case.json. Exports the website
+render, a 1:1 A4 cut pattern and a dimension report. Keyboard only: no puck or
+attachment. The keyboard model is for the render and the fit checks, not a
+Keebart drawing.
 """
 from __future__ import annotations
 
@@ -176,7 +177,7 @@ def pattern_svg(cut_w, cut_l, seam, half):
   </g>
   <line x1="{x0:.2f}" y1="{fold:.2f}" x2="{x1:.2f}" y2="{fold:.2f}" stroke="#111" stroke-width="0.35" stroke-dasharray="8 2 1 2"/>
   <g {text} font-size="3.2" text-anchor="middle">
-    <text x="{mid}" y="{fold - 2:.2f}">FOLD</text>
+    <text x="{mid}" y="{fold - 2:.2f}">FOLD · sewn to the other sleeve's fold, keycap side</text>
     <text x="{mid}" y="{y0 + 7:.2f}">OPENING · top of the sleeve</text>
     <text x="{mid}" y="{y1 - 4:.2f}">OPENING · underside of the sleeve</text>
     <text x="{mid}" y="{y0 - 4:.2f}">{cut_w} mm</text>
@@ -217,56 +218,71 @@ def build(c):
     closed, (X, Y, Z, r) = sleeve(c, env)
     hollow, _ = sleeve(c, env, hollow=True)
     open_sleeve, _ = sleeve(c, env, hollow=True, open_mouth=True)
-    turned = lambda obj: obj.rotate((0, 0, 0), (0, 0, 1), 180)
-
-    # A hair of space between the two sleeves keeps their meshes separate.
-    pitch = Y + 0.3
-    side_sleeves = [closed.translate((0, pitch / 2, 0)), turned(closed).translate((0, -pitch / 2, 0))]
-    side_bands, side_line = zip(*[band(c, x, Z / 2, Y + pitch, Z, r) for x in (-X / 4, X / 4)])
     dt = c["divider_thickness"]
-    divider = shape(cq.Workplane("XY").box(X - 8, Y - 8, dt, centered=(True, True, False)).edges("|Z").fillet(4).translate((0, 0, Z)))
-    stack_sleeves = [closed, closed.translate((0, 0, Z + dt))]
-    stack_bands, stack_line = zip(*[band(c, x, (2 * Z + dt) / 2, Y, 2 * Z + dt, r) for x in (-X / 4, X / 4)])
+    top = 2 * Z + dt
+    turned = lambda obj: obj.rotate((0, 0, 0), (0, 0, 1), 180)
+    flipped = lambda obj: obj.rotate((0, 0, 0), (0, 1, 0), 180)
+    # The hinge runs along the closed ends (-Y) between the two keycap sides, so the book
+    # opens about that line and lays the top sleeve flat beside the bottom one.
+    unfold = lambda obj: obj.rotate((0, -Y / 2, Z + dt / 2), (1, -Y / 2, Z + dt / 2), 180)
 
-    in_right = placed(right, 0, (0, pitch / 2, t))
-    in_left = placed(left, 180, (0, -pitch / 2, t))
-    hollow_sleeves = [hollow.translate((0, pitch / 2, 0)), turned(hollow).translate((0, -pitch / 2, 0))]
+    def hinge(y, z):
+        return shape(cq.Workplane("YZ", origin=(-(X / 2 - CORNER_RADIUS - t), 0, 0)).center(y, z).circle(2.2).extrude(X - 2 * (CORNER_RADIUS + t)))
+
+    def book(lower, upper, is_open=False):
+        upper = flipped(upper).translate((0, 0, top))
+        if is_open:
+            return lower.fuse(hinge(-Y / 2, Z - 2)).fuse(unfold(upper))
+        return lower.fuse(hinge(-Y / 2 + 2.2, Z + dt / 2)).fuse(upper)
+
+    book_closed, book_open = book(closed, closed), book(closed, closed, is_open=True)
+    divider = shape(cq.Workplane("XY").box(X - 8, Y - 8, dt, centered=(True, True, False)).edges("|Z").fillet(4).translate((0, 0, Z)))
+    strap, strap_line = band(c, 0, top / 2, Y, top, r)
+
+    upper = flipped(closed).translate((0, 0, top))
+    clash = overlap(closed, upper) + overlap(closed, unfold(upper))
+    checks.append({"name": "book folds shut and opens flat", "pass": clash < 0.5,
+                   "detail": f"{clash:.2f} mm3 overlap between the sleeves, closed or open"})
+    clash = overlap(strap, compound([book_closed, divider]))
+    checks.append({"name": "strap sits on the closed book", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
+
+    # Right half keycaps up in the bottom sleeve; the left half lies keycaps down above it,
+    # key over key, with its feet against the top sleeve's outer layer.
+    in_lower = placed(right, 0, (0, 0, t))
+    in_upper = {k: flipped(v).translate((0, 0, top - t)) for k, v in left.items()}
+    book_hollow = book(hollow, hollow)
+    clash = overlap(compound([*in_lower.values(), *in_upper.values()]), book_hollow)
+    checks.append({"name": "both halves fit inside their sleeves", "pass": clash < 0.5,
+                   "detail": f"{clash:.2f} mm3 overlap with the 3 mm fabric; {CLEARANCE:g} mm play each side"})
     # Turned so the open mouth faces the viewer's default camera.
     slide = 0.55 * D
     sliding_half = placed(right, 180, (0, -slide, t))
     open_sleeve = turned(open_sleeve)
-
-    keyboard = compound([*in_right.values(), *in_left.values()])
-    clash = overlap(keyboard, compound(hollow_sleeves))
-    checks.append({"name": "both halves fit inside their sleeves", "pass": clash < 0.5,
-                   "detail": f"{clash:.2f} mm3 overlap with the 3 mm fabric; {CLEARANCE:g} mm play each side"})
     clash = overlap(compound(sliding_half.values()), open_sleeve)
     checks.append({"name": "half slides through the open mouth", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
-    for label, bands, sleeves in [("side by side", side_bands, side_sleeves), ("stacked", stack_bands, [*stack_sleeves, divider])]:
-        clash = overlap(compound(bands), compound(sleeves))
-        checks.append({"name": f"bands sit on the {label} sleeves", "pass": clash < 0.5, "detail": f"{clash:.2f} mm3 overlap"})
 
-    loops = {"side_by_side": [elastic_cut(c, v) for v in side_line], "stacked": [elastic_cut(c, v) for v in stack_line]}
-    for label, cuts in loops.items():
-        checks.append({"name": f"elastic for {label.replace('_', ' ')} within 1 m", "pass": sum(cuts) <= 1000,
-                       "detail": f"{len(cuts)} loops of {cuts[0]} mm = {sum(cuts)} mm"})
+    loops = {"closed": [elastic_cut(c, strap_line)]}
+    checks.append({"name": "elastic within the 1 m from the guide", "pass": sum(loops["closed"]) <= 1000,
+                   "detail": f"one loop of {loops['closed'][0]} mm"})
 
     modes = {
-        "side": {"sleeves": side_sleeves, "bands": side_bands},
-        "stacked": {"sleeves": stack_sleeves, "bands": stack_bands, "divider": [divider]},
+        "closed": {"sleeves": [book_closed], "strap": [strap], "divider": [divider]},
+        "open": {"sleeves": [book_open]},
         "sliding": {"sleeve": [open_sleeve], **{k: [v] for k, v in sliding_half.items()}},
     }
-    # Cut through the front sleeve along the encoder knob, the tallest part of the half.
-    cut_y = in_left["knob"].Center().y
-    cutaway = {"sleeves": hollow_sleeves, "bands": side_bands, **{k: [in_right[k], in_left[k]] for k in right}}
+    # Cut through both encoder knobs, the tallest part of each half, which meet face to face.
+    cut_y = in_lower["knob"].Center().y
+    cutaway = {"sleeves": [book_hollow], "strap": [strap], "divider": [divider],
+               **{k: [in_lower[k], in_upper[k]] for k in right}}
     modes["cutaway"] = {k: [o for o in (keep_behind(o, cut_y) for o in v) if o.Volume() > 0.01] for k, v in cutaway.items()}
     derived = {
         "keyboard_half": {"length": round(L, 1), "depth": round(D, 1), "keycap_top_above_desk": env["keycap_top"],
                           "knob_top_above_desk": env["knob_top"], "packed_height": H},
         "sleeve": {"cut_width": cut_w, "cut_length": cut_l, "pieces": 2, "seam_line_width": round(seam_width, 1),
                    "fold_to_opening": round(seam_depth, 1), "fold_from_end": cut_l / 2, "outside": [round(X, 1), round(Y, 1), round(Z, 1)]},
+        "hinge_length": round(X - 2 * (CORNER_RADIUS + t)),
         "neoprene_needed": [2 * cut_w, cut_l],
-        "packed": {"side_by_side": size_of([*side_sleeves, *side_bands]), "stacked": size_of([*stack_sleeves, *stack_bands, divider])},
+        "packed": {"closed": size_of([book_closed, strap, divider]), "open": size_of([book_open])},
         "elastic_loops": loops,
         "divider": [round(X - 8, 1), round(Y - 8, 1)],
         "slide_out_shown": round(slide, 1),

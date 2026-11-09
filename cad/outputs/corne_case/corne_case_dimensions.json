@@ -25,7 +25,8 @@
       "keyboard": "Same keyboard inputs as the Corne dock: the 8.2 mm case/plate profile is from Keebart's product image; the 16 mm keycap height and 2 mm feet are earlier rocklabs assumptions. The half outline is the upstream foostan Corne v4 3x6 case, not a Keebart drawing.",
       "encoder": "Knob size and height are not known. 5 mm above the keycaps is an assumption; measure yours and rebuild if it sits higher.",
       "sleeve": "One rectangle per half, folded at the far end and sewn up both sides. Girth allowance covers the 3 mm fabric wrapping round the half, so the sleeve is snug. The mouth needs no hem because neoprene does not fray.",
-      "elastic": "Each band is a closed loop of 30 mm elastic, cut at 85 % of the packed girth plus a 20 mm overlap for sewing it shut. The guide's 1 m is enough for either arrangement."
+      "hinge": "The two sleeves are sewn together along their folded ends on the keycap side, so the case opens flat and folds shut like a book with the halves face to face.",
+      "elastic": "The strap is one closed loop of 30 mm elastic, cut at 85 % of the closed book's girth plus a 20 mm overlap for sewing it shut."
     }
   },
   "derived": {
@@ -49,29 +50,25 @@
         29.5
       ]
     },
+    "hinge_length": 120,
     "neoprene_needed": [
       370,
       252
     ],
     "packed": {
-      "side_by_side": [
-        144.4,
-        210.5,
-        32.5
-      ],
-      "stacked": [
+      "closed": [
         144.4,
         106.6,
         63.5
+      ],
+      "open": [
+        144.4,
+        207.2,
+        29.7
       ]
     },
     "elastic_loops": {
-      "side_by_side": [
-        419,
-        419
-      ],
-      "stacked": [
-        295,
+      "closed": [
         295
       ]
     },
@@ -98,6 +95,16 @@
       "detail": "185 \u00d7 252 mm inside a 190 \u00d7 270 mm printable area"
     },
     {
+      "name": "book folds shut and opens flat",
+      "pass": true,
+      "detail": "0.00 mm3 overlap between the sleeves, closed or open"
+    },
+    {
+      "name": "strap sits on the closed book",
+      "pass": true,
+      "detail": "0.00 mm3 overlap"
+    },
+    {
       "name": "both halves fit inside their sleeves",
       "pass": true,
       "detail": "0.00 mm3 overlap with the 3 mm fabric; 1 mm play each side"
@@ -108,49 +115,29 @@
       "detail": "0.00 mm3 overlap"
     },
     {
-      "name": "bands sit on the side by side sleeves",
+      "name": "elastic within the 1 m from the guide",
       "pass": true,
-      "detail": "0.00 mm3 overlap"
+      "detail": "one loop of 295 mm"
     },
     {
-      "name": "bands sit on the stacked sleeves",
+      "name": "closed sleeves STL closed",
       "pass": true,
-      "detail": "0.00 mm3 overlap"
+      "detail": "volume 862054 mm3"
     },
     {
-      "name": "elastic for side by side within 1 m",
+      "name": "closed strap STL closed",
       "pass": true,
-      "detail": "2 loops of 419 mm = 838 mm"
+      "detail": "volume 14518 mm3"
     },
     {
-      "name": "elastic for stacked within 1 m",
-      "pass": true,
-      "detail": "2 loops of 295 mm = 590 mm"
-    },
-    {
-      "name": "side sleeves STL closed",
-      "pass": true,
-      "detail": "volume 860395 mm3"
-    },
-    {
-      "name": "side bands STL closed",
-      "pass": true,
-      "detail": "volume 42161 mm3"
-    },
-    {
-      "name": "stacked sleeves STL closed",
-      "pass": true,
-      "detail": "volume 860395 mm3"
-    },
-    {
-      "name": "stacked bands STL closed",
-      "pass": true,
-      "detail": "volume 29035 mm3"
-    },
-    {
-      "name": "stacked divider STL closed",
+      "name": "closed divider STL closed",
       "pass": true,
       "detail": "volume 19536 mm3"
+    },
+    {
+      "name": "open sleeves STL closed",
+      "pass": true,
+      "detail": "volume 861685 mm3"
     },
     {
       "name": "sliding sleeve STL closed",
@@ -185,37 +172,42 @@
     {
       "name": "cutaway sleeves STL closed",
       "pass": true,
-      "detail": "volume 196442 mm3"
+      "detail": "volume 71915 mm3"
     },
     {
-      "name": "cutaway bands STL closed",
+      "name": "cutaway strap STL closed",
       "pass": true,
-      "detail": "volume 34483 mm3"
+      "detail": "volume 5234 mm3"
+    },
+    {
+      "name": "cutaway divider STL closed",
+      "pass": true,
+      "detail": "volume 5167 mm3"
     },
     {
       "name": "cutaway case STL closed",
       "pass": true,
-      "detail": "volume 140758 mm3"
+      "detail": "volume 46876 mm3"
     },
     {
       "name": "cutaway keycaps STL closed",
       "pass": true,
-      "detail": "volume 36421 mm3"
+      "detail": "volume 11624 mm3"
     },
     {
       "name": "cutaway switches STL closed",
       "pass": true,
-      "detail": "volume 21622 mm3"
+      "detail": "volume 7033 mm3"
     },
     {
       "name": "cutaway knob STL closed",
       "pass": true,
-      "detail": "volume 2367 mm3"
+      "detail": "volume 1578 mm3"
     },
     {
       "name": "cutaway feet STL closed",
       "pass": true,
-      "detail": "volume 603 mm3"
+      "detail": "volume 402 mm3"
     }
   ]
 }
